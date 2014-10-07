@@ -29,7 +29,7 @@ function run_all_tests() {
     local actual_out="$(mktemp "/tmp/${filebase}.out.XXXXXX")"
     local actual_err="$(mktemp "/tmp/${filebase}.err.XXXXXX")"
 
-    ./autogen.sh $(cat "${input}") > "${actual_out}" 2> "${actual_err}"
+    bash -c "./autogen.sh $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
 
     local -i stdout=1
     local -i stderr=1

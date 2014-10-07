@@ -24,11 +24,12 @@
 #   autogen.sh file.py
 
 LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
+AUTHOR="Google Inc."
 
 function printLicenseWithYear() {
   cat "${LICENSE}" \
     | sed "s/%YEAR%/$(date +%Y)/" \
-    | sed "s/%AUTHOR%/Google Inc./"
+    | sed "s/%AUTHOR%/${AUTHOR}/"
 }
 
 function printLicenseNonHashComment() {
@@ -50,12 +51,45 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
+while getopts a:l: opt ; do
+  case "${opt}" in
+    a)
+      AUTHOR="${OPTARG}"
+      ;;
+
+    l)
+      case "${OPTARG}" in
+        apache)
+          LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
+          ;;
+        mit)
+          LICENSE="$(dirname $0)/licenses/mit.txt"
+          ;;
+        *)
+          echo "Invalid license selected: ${OPTARG}" >&2
+          exit 1
+      esac
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
 if [[ $# -eq 0 ]]; then
-  echo "Syntax: $0 [filename]"
-  exit
+  echo "\
+Syntax: $0 [options] <filename>
+
+Options:
+  -a [author]
+  -l [license]
+
+Licenses:
+  apache: Apache 2.0
+  mit:    MIT" >&2
+  exit 1
 fi
 
-case $1 in
+case "$1" in
 
   *.c | *.h)
     echo "/*"
