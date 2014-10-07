@@ -144,7 +144,7 @@ case $1 in
     ;;
 
   *)
-    echo "File extension not recognized." >&2
+    echo "File extension not recognized: $1" >&2
     exit 1
     ;;
 
