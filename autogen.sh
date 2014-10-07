@@ -62,6 +62,15 @@ while getopts a:l: opt ; do
         apache)
           LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
           ;;
+        bsd2|bsd-2)
+          LICENSE="$(dirname $0)/licenses/bsd-2-clause.txt"
+          ;;
+        bsd3|bsd-3)
+          LICENSE="$(dirname $0)/licenses/bsd-3-clause.txt"
+          ;;
+        bsd4|bsd-4)
+          LICENSE="$(dirname $0)/licenses/bsd-4-clause.txt"
+          ;;
         mit)
           LICENSE="$(dirname $0)/licenses/mit.txt"
           ;;
@@ -85,6 +94,9 @@ Options:
 
 Licenses:
   apache: Apache 2.0
+  bsd2:   BSD, 2-clause, aka Simplified/FreeBSD
+  bsd3:   BSD, 3-clause, aka Revised/New/Modified
+  bsd4:   BSD, 4-clause, aka Original
   mit:    MIT" >&2
   exit 1
 fi
