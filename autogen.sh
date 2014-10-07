@@ -26,7 +26,9 @@
 LICENSE="$(dirname $0)/apache-2.0-header.txt"
 
 function printLicenseWithYear() {
-  cat ${LICENSE} | sed "s/YEAR/$(date +%Y)/"
+  cat "${LICENSE}" \
+    | sed "s/%YEAR%/$(date +%Y)/" \
+    | sed "s/%AUTHOR%/Google Inc./"
 }
 
 function printLicenseNonHashComment() {
