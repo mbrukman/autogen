@@ -23,7 +23,7 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-LICENSE="$(dirname $0)/apache-2.0-header.txt"
+LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
 
 function printLicenseWithYear() {
   cat "${LICENSE}" \
