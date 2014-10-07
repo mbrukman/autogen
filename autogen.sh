@@ -142,7 +142,8 @@ case $1 in
     ;;
 
   *)
-    echo "File extension not recognized."
+    echo "File extension not recognized." >&2
+    exit 1
     ;;
 
 esac
