@@ -33,11 +33,11 @@ function printLicenseWithYear() {
 }
 
 function printLicenseNonHashComment() {
-  printLicenseWithYear | sed "s#^#$1 #;s/ \+$//"
+  printLicenseWithYear | sed -E "s#^#$1 #;s/ +$//"
 }
 
 function printLicenseHashComment() {
-  printLicenseWithYear | sed "s/^/# /;s/ \+$//"
+  printLicenseWithYear | sed -E "s/^/# /;s/ +$//"
 }
 
 readonly TODO_COMMENT="TODO: High-level file comment."
