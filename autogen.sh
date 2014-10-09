@@ -24,12 +24,12 @@
 #   autogen.sh file.py
 
 LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
-AUTHOR="Google Inc."
+COPYRIGHT_HOLDER="Google Inc."
 
 function printLicenseWithYear() {
   cat "${LICENSE}" \
     | sed "s/%YEAR%/$(date +%Y)/" \
-    | sed "s/%AUTHOR%/${AUTHOR}/"
+    | sed "s/%COPYRIGHT_HOLDER%/${COPYRIGHT_HOLDER}/"
 }
 
 function printLicenseNonHashComment() {
@@ -51,10 +51,10 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
-while getopts a:l: opt ; do
+while getopts c:l: opt ; do
   case "${opt}" in
-    a)
-      AUTHOR="${OPTARG}"
+    c)
+      COPYRIGHT_HOLDER="${OPTARG}"
       ;;
 
     l)
@@ -89,7 +89,7 @@ if [[ $# -eq 0 ]]; then
 Syntax: $0 [options] <filename>
 
 Options:
-  -a [author]
+  -c [copyright holder]
   -l [license]
 
 Licenses:
