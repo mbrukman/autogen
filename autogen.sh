@@ -184,7 +184,7 @@ case "$1" in
     printFileCommentTemplate "#"
     ;;
 
-  Makefile | Makefile.*)
+  Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
     printLicenseHashComment
     printFileCommentTemplate "#"
     ;;
