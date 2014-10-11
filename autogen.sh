@@ -177,6 +177,13 @@ case "$1" in
     printFileCommentTemplate "#"
     ;;
 
+  *.rb)
+    echo "#!/usr/bin/ruby"
+    echo "#"
+    printLicenseHashComment
+    printFileCommentTemplate "#"
+    ;;
+
   *.sh)
     echo "#!/bin/bash -eu"
     echo "#"
