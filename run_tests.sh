@@ -47,7 +47,7 @@ function run_all_tests() {
       status="FAILED"
     fi
 
-    echo "[${status}] $(basename "${input}")"
+    echo "[${status}] ${filebase}"
 
     if [ ${stdout} -eq 0 ]; then
       echo "  Differences in stdout; log in ${actual_out}"
