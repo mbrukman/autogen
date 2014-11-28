@@ -141,18 +141,6 @@ case "$1" in
     echo "(* ${TODO_COMMENT} *)"
     ;;
 
-  *_test.py)
-    # Get the common python header without the test additions.
-    readonly BASE_PY=$(echo $1 | sed 's/_test//')
-    $0 ${BASE_PY}
-    echo
-    echo "import unittest"
-    # Maybe import the package that this is intended to test.
-    if [ -e ${BASE_PY} ]; then
-      echo "import $(echo ${BASE_PY} | sed 's/\.py$//')"
-    fi
-    ;;
-
   *.php)
     # We can't make PHP scripts locally executable with the #!/usr/bin/php line
     # because PHP comments only have meaning inside the <?php ... ?> which
@@ -177,6 +165,18 @@ case "$1" in
     printFileCommentTemplate "#"
     echo
     echo "use strict;"
+    ;;
+
+  *_test.py)
+    # Get the common python header without the test additions.
+    readonly BASE_PY=$(echo $1 | sed 's/_test//')
+    $0 ${BASE_PY}
+    echo
+    echo "import unittest"
+    # Maybe import the package that this is intended to test.
+    if [ -e ${BASE_PY} ]; then
+      echo "import $(echo ${BASE_PY} | sed 's/\.py$//')"
+    fi
     ;;
 
   *.py)
