@@ -130,6 +130,10 @@ case "$1" in
     printFileCommentTemplate ";;"
     ;;
 
+  *.md | *.markdown)
+    printLicenseWithYear
+    ;;
+
   *.ml | *.sml)
     echo "(*"
     printLicenseNonHashComment " *"
@@ -194,6 +198,10 @@ case "$1" in
     echo "#"
     printLicenseHashComment
     printFileCommentTemplate "#"
+    ;;
+
+  *.txt | README)
+    printLicenseWithYear
     ;;
 
   Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
