@@ -1,1 +1,1 @@
--c "Acme Inc." -l bsd3 file.rb
+-c "Acme Inc." -l mit file.rb
