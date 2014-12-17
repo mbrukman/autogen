@@ -42,12 +42,20 @@ function run_all_tests() {
       stderr=0
     fi
 
-    local status="PASSED"
+    if [ -t 1 ]; then
+      local status="\033[0;32mPASSED\033[0m"
+    else
+      local status="PASSED"
+    fi
     if [ ${stdout} -eq 0 ] || [ ${stderr} -eq 0 ]; then
-      status="FAILED"
+      if [ -t 1 ]; then
+        status="\033[0;31mFAILED\033[0m"
+      else
+        status="FAILED"
+      fi
     fi
 
-    echo "[${status}] ${filebase}"
+    echo -e "[${status}] ${filebase}"
 
     if [ ${stdout} -eq 0 ]; then
       echo "  Differences in stdout; log in ${actual_out}"
