@@ -14,6 +14,9 @@
 
 VERB = @
 
+.PHONY default:
+	$(VERB) echo "Available actions: test, regen"
+
 test:
 	$(VERB) bash run_tests.sh
 
