@@ -55,7 +55,7 @@ function run_all_tests() {
       fi
     fi
 
-    echo -e "[${status}] ${filebase}"
+    echo -e "${status} ${filebase}"
 
     if [ ${stdout} -eq 0 ]; then
       echo "  Differences in stdout; log in ${actual_out}"
