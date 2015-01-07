@@ -60,13 +60,13 @@ function run_all_tests() {
     echo -e "${status} ${filebase}"
 
     if [ ${stdout} -eq 0 ]; then
-      echo "  Differences in stdout; log in ${actual_out}"
+      echo "  Differences in stdout; compare via: diff -u ${expected_out} ${actual_out}"
     else
       rm -f "${actual_out}"
     fi
 
     if [ ${stderr} -eq 0 ]; then
-      echo "  Differences in stderr; log in ${actual_err}"
+      echo "  Differences in stderr; compare via: diff -u ${expected_err} ${actual_err}"
     else
       rm -f "${actual_err}"
     fi
