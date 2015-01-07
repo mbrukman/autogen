@@ -25,10 +25,11 @@
 
 LICENSE="$(dirname $0)/licenses/apache-2.0.txt"
 COPYRIGHT_HOLDER="Google Inc."
+YEAR="${YEAR:-$(date +%Y)}"
 
 function printLicenseWithYear() {
   cat "${LICENSE}" \
-    | sed "s/%YEAR%/$(date +%Y)/" \
+    | sed "s/%YEAR%/${YEAR}/" \
     | sed "s/%COPYRIGHT_HOLDER%/${COPYRIGHT_HOLDER}/"
 }
 

@@ -29,7 +29,9 @@ function run_all_tests() {
     local actual_out="$(mktemp "/tmp/${filebase}.out.XXXXXX")"
     local actual_err="$(mktemp "/tmp/${filebase}.err.XXXXXX")"
 
-    bash -c "./autogen.sh $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
+    # Run tests in a hermetic environment such that they don't break every year.
+    env YEAR=2014 \
+      bash -c "./autogen.sh $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
 
     local -i stdout=1
     local -i stderr=1
