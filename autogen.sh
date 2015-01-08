@@ -116,6 +116,11 @@ case "$1" in
     printFileCommentTemplate "//"
     ;;
 
+  *.el)
+    printLicenseNonHashComment ";;"
+    printFileCommentTemplate ";;"
+    ;;
+
   *.erl)
     printLicenseNonHashComment "%"
     printFileCommentTemplate "%"
