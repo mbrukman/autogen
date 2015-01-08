@@ -205,6 +205,16 @@ case "$1" in
     printLicenseWithYear
     ;;
 
+  *.vim)
+    printLicenseNonHashComment \"
+    # Handle the file header locally; hard to pass a double-quote to function
+    # which wants to double-quote its arguments.
+    echo "\""
+    perl -e "print '\"' x 80 . \"\n\""
+    echo "\""
+    echo "\" ${TODO_COMMENT}"
+    ;;
+
   Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
     printLicenseHashComment
     printFileCommentTemplate "#"
