@@ -25,7 +25,9 @@ function gen_test_data() {
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
 
-    bash -c "./autogen.sh $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
+    # Run tests in a hermetic environment such that they don't break every year.
+    env YEAR=2014 \
+      bash -c "./autogen.sh $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
   done
 }
 
