@@ -75,6 +75,9 @@ while getopts c:l: opt ; do
         gpl2)
           LICENSE="$(dirname $0)/licenses/gpl-2.txt"
           ;;
+        lgpl2.1|lgpl-2.1)
+          LICENSE="$(dirname $0)/licenses/lgpl-2.1.txt"
+          ;;
         mit)
           LICENSE="$(dirname $0)/licenses/mit.txt"
           ;;
@@ -97,12 +100,13 @@ Options:
   -l [license]
 
 Licenses:
-  apache: Apache 2.0
-  bsd2:   BSD, 2-clause, aka Simplified/FreeBSD
-  bsd3:   BSD, 3-clause, aka Revised/New/Modified
-  bsd4:   BSD, 4-clause, aka Original
-  gpl2:   GPL 2
-  mit:    MIT" >&2
+  apache:       Apache 2.0
+  bsd2:         BSD, 2-clause, aka Simplified/FreeBSD
+  bsd3:         BSD, 3-clause, aka Revised/New/Modified
+  bsd4:         BSD, 4-clause, aka Original
+  gpl2:         GPL 2
+  lgpl2.1:      LGPL 2.1
+  mit:          MIT" >&2
   exit 1
 fi
 
