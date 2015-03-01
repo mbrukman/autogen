@@ -11,6 +11,17 @@ autogen.sh -c [copyright holder] -l [license] [filename]
 
 To get a list of supported licenses, run `autogen.sh` with no parameters.
 
+File type or language is determined based on the full filename or extension, as
+appropriate. See [`autogen.sh`](autogen.sh) for a list of recognized file types.
+
+Sample outputs:
+
+* [Apache 2.0, Haskell](testdata/apache-acme-hs.out)
+* [3-clause BSD, Erlang](testdata/bsd3-acme-erl.out)
+* [GPL 2, Ruby](testdata/gpl2-acme-rb.out)
+* [LGPL 2.1, C++](testdata/lgpl2.1-acme-cpp.out)
+* [MIT, Makefile](testdata/mit-acme-makefile.out)
+
 Developing
 ----------
 
