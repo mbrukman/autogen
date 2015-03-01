@@ -1,1 +1,1 @@
--c "Acme Inc." -l bsd4 file.py
+-c "Acme Inc." -l bsd4 file.rb
