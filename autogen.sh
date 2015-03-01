@@ -72,6 +72,9 @@ while getopts c:l: opt ; do
         bsd4|bsd-4)
           LICENSE="$(dirname $0)/licenses/bsd-4-clause.txt"
           ;;
+        gpl2)
+          LICENSE="$(dirname $0)/licenses/gpl-2.txt"
+          ;;
         mit)
           LICENSE="$(dirname $0)/licenses/mit.txt"
           ;;
@@ -98,6 +101,7 @@ Licenses:
   bsd2:   BSD, 2-clause, aka Simplified/FreeBSD
   bsd3:   BSD, 3-clause, aka Revised/New/Modified
   bsd4:   BSD, 4-clause, aka Original
+  gpl2:   GPL 2
   mit:    MIT" >&2
   exit 1
 fi
