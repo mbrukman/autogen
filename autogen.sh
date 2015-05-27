@@ -52,7 +52,7 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
-while getopts c:l: opt ; do
+while getopts c:l:y: opt ; do
   case "${opt}" in
     c)
       COPYRIGHT_HOLDER="${OPTARG}"
@@ -86,6 +86,9 @@ while getopts c:l: opt ; do
           exit 1
       esac
       ;;
+    y)
+      YEAR="${OPTARG}"
+      ;;
   esac
 done
 
@@ -98,6 +101,7 @@ Syntax: $0 [options] <filename>
 Options:
   -c [copyright holder]
   -l [license]
+  -y [year]
 
 Licenses:
   apache:       Apache 2.0
