@@ -125,7 +125,7 @@ case "$1" in
     echo "/* ${TODO_COMMENT} */"
     ;;
 
-  *.cc | *.cpp | *.go | *.hpp | *.java | *.js | *.proto | *.scala)
+  *.cc | *.cpp | *.go | *.hpp | *.java | *.js | *.proto | *.scala | *.rs)
     printLicenseNonHashComment "//"
     printFileCommentTemplate "//"
     ;;
