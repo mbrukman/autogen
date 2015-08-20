@@ -145,6 +145,11 @@ case "$1" in
     printFileCommentTemplate "--"
     ;;
 
+  *.jsonnet)
+    printLicenseHashComment
+    printFileCommentTemplate "#"
+    ;;
+
   *.md | *.markdown)
     printLicenseWithYear
     ;;
