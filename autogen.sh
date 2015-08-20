@@ -118,7 +118,7 @@ fi
 
 case "$1" in
 
-  *.c | *.h)
+  *.c | *.h | *.css)
     echo "/*"
     printLicenseNonHashComment " *"
     echo " */"
