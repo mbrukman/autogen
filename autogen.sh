@@ -160,7 +160,7 @@ case "$1" in
     # We can't make PHP scripts locally executable with the #!/usr/bin/php line
     # because PHP comments only have meaning inside the <?php ... ?> which
     # means the first line cannot be simply #!/usr/bin/php to let the shell
-    # know how to run these scripts.  Instead, we'll have to run them via 
+    # know how to run these scripts.  Instead, we'll have to run them via
     # "php script.php" .
     #
     # Note: PHP accepts C, C++, and shell-style comments.
