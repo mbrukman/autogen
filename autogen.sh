@@ -130,7 +130,7 @@ case "$1" in
     printFileCommentTemplate "//"
     ;;
 
-  *.el)
+  *.el | *.lisp)
     printLicenseNonHashComment ";;"
     printFileCommentTemplate ";;"
     ;;
@@ -143,11 +143,6 @@ case "$1" in
   *.hs)
     printLicenseNonHashComment "--"
     printFileCommentTemplate "--"
-    ;;
-
-  *.lisp)
-    printLicenseNonHashComment ";;"
-    printFileCommentTemplate ";;"
     ;;
 
   *.md | *.markdown)
