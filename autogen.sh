@@ -77,6 +77,9 @@ while getopts c:l:y: opt ; do
         gpl2|gpl-2)
           LICENSE="${AUTOGEN}/licenses/gpl-2.txt"
           ;;
+        gpl3|gpl-3)
+          LICENSE="${AUTOGEN}/licenses/gpl-3.txt"
+          ;;
         lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
           LICENSE="${AUTOGEN}/licenses/lgpl-2.1.txt"
           ;;
@@ -111,6 +114,7 @@ Licenses:
   bsd3:         BSD, 3-clause, aka Revised/New/Modified
   bsd4:         BSD, 4-clause, aka Original
   gpl2:         GPL 2
+  gpl3:         GPL 3
   lgpl2.1:      LGPL 2.1 (aliases: lgpl, lgpl2)
   mit:          MIT" >&2
   exit 1
