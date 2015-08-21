@@ -33,11 +33,15 @@ the `testdata/` directory, namely:
 * `testdata/<feature>.out` - expected stdout for the test
 * `testdata/<feature>.err` - expected stderr for the test
 
+To generate the `*.out` and `*.err` files automatically, just add the `*.in`
+files and run `make regen`. Then, examine the resulting `*.out` and `*.err`
+files.
+
 Testing
 -------
 
 `make test` will process all files in `testdata/` and tell you which
-passed/failed.
+passed or failed.
 
 License
 -------
