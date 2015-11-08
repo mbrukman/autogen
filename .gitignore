@@ -1,0 +1,2 @@
+# Bazel output/autogen/etc. directories.
+bazel-*
