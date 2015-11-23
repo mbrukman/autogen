@@ -238,7 +238,7 @@ case "$1" in
     echo "\" ${TODO_COMMENT}"
     ;;
 
-  Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
+  BUILD | Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
     printLicenseHashComment
     printFileCommentTemplate "#"
     ;;
