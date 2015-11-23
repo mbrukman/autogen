@@ -1,7 +1,8 @@
 autogen
 =======
 
-Automatically generate boilerplate comments for new files with a single command.
+Automatically generate boilerplate comments and code for new files with a single
+command.
 
 Usage:
 
