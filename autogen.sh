@@ -191,23 +191,61 @@ case "$1" in
     echo "use strict;"
     ;;
 
-  *_test.py)
-    # Get the common python header without the test additions.
-    readonly BASE_PY=$(echo $1 | sed 's/_test//')
-    $0 ${BASE_PY}
+  test_*.py | *_test.py)
+    echo "#!/usr/bin/python"
+    echo "#"
+    printLicenseHashComment
+    cat <<EOF
+
+"""${TODO_COMMENT}"""
+EOF
+    BASE_PY="${1/#test_/}"
+    BASE_PY="${BASE_PY/_test/}"
     echo
     echo "import unittest"
     # Maybe import the package that this is intended to test.
-    if [ -e ${BASE_PY} ]; then
-      echo "import $(echo ${BASE_PY} | sed 's/\.py$//')"
+    if [ -e "${BASE_PY}" ]; then
+      echo "import ${BASE_PY/%.py/}"
     fi
+    # Add basic bootstrap code.
+    cat <<EOF
+
+
+class FooTest(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def testBar(self):
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()
+EOF
     ;;
 
   *.py)
     echo "#!/usr/bin/python"
     echo "#"
     printLicenseHashComment
-    printFileCommentTemplate "#"
+    cat <<EOF
+
+"""${TODO_COMMENT}"""
+
+import sys
+
+
+def main(argv):
+    pass
+
+
+if __name__ == '__main__':
+    main(sys.argv)
+EOF
     ;;
 
   *.rb)

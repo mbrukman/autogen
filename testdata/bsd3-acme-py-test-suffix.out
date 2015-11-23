@@ -27,12 +27,20 @@
 
 """TODO: High-level file comment."""
 
-import sys
+import unittest
 
 
-def main(argv):
-    pass
+class FooTest(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def testBar(self):
+        pass
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    unittest.main()
