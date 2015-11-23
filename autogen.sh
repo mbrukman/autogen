@@ -122,6 +122,8 @@ fi
 
 case "$1" in
 
+  # TODO(mbrukman): in some projects, *.h are actually C++ files where users
+  # want to use C++ style "//" comments. How can we handle this flexibility?
   *.c | *.h | *.css)
     echo "/*"
     printLicenseNonHashComment " *"
@@ -129,7 +131,7 @@ case "$1" in
     echo "/* ${TODO_COMMENT} */"
     ;;
 
-  *.cc | *.cpp | *.go | *.hpp | *.java | *.js | *.proto | *.rs | *.scala)
+  *.cc | *.cpp | *.go | *.hh | *.hpp | *.java | *.js | *.proto | *.rs | *.scala)
     printLicenseNonHashComment "//"
     printFileCommentTemplate "//"
     ;;
