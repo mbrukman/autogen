@@ -278,6 +278,11 @@ EOF
     echo "\" ${TODO_COMMENT}"
     ;;
 
+  *.yaml | *.yml)
+    printLicenseHashComment
+    printFileCommentTemplate "#"
+    ;;
+
   BUILD | Dockerfile | Makefile | Makefile.* | Rakefile | Vagrantfile)
     printLicenseHashComment
     printFileCommentTemplate "#"
