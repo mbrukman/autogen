@@ -20,6 +20,13 @@
 #
 ################################################################################
 
+# If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
+# otherwise, default to current dir and find it relative to that.
+declare -r SRCDIR="${TEST_SRCDIR:-$(pwd)}"
+
+# Set temp directory from environment, if running under Bazel.
+declare -r TMPDIR="${TEST_TMPDIR:-${TEMPDIR:-${TMPDIR:-/tmp}}}"
+
 # Args:
 #   $1: input file
 #   $2: expected stdout
@@ -30,11 +37,11 @@ function run_one_test() {
   local expected_err="$3"
 
   local filebase="$(basename "${input%.in}")"
-  local actual_out="$(mktemp "/tmp/${filebase}.out.XXXXXX")"
-  local actual_err="$(mktemp "/tmp/${filebase}.err.XXXXXX")"
+  local actual_out="$(mktemp "/${TMPDIR}/${filebase}.out.XXXXXX")"
+  local actual_err="$(mktemp "/${TMPDIR}/${filebase}.err.XXXXXX")"
 
   # Run tests in a hermetic environment such that they don't break every year.
-  bash -c "./autogen.sh -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
+  bash -c "${SRCDIR}/autogen.sh -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
 
   local -i stdout=1
   local -i stderr=1
@@ -81,7 +88,7 @@ function run_one_test() {
 }
 
 function run_all_tests() {
-  for input in testdata/*.in; do
+  for input in ${SRCDIR}/testdata/*.in; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
     run_one_test "${input}" "${expected_out}" "${expected_err}"
