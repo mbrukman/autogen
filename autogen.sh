@@ -23,9 +23,9 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-declare -r AUTOGEN="$(dirname $0)"
+declare -r SRCDIR="$(dirname $0)"
 
-LICENSE="${AUTOGEN}/licenses/apache-2.0.txt"
+LICENSE="${SRCDIR}/licenses/apache-2.0.txt"
 COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
 
@@ -63,28 +63,28 @@ while getopts c:l:y: opt ; do
     l)
       case "${OPTARG}" in
         apache)
-          LICENSE="${AUTOGEN}/licenses/apache-2.0.txt"
+          LICENSE="${SRCDIR}/licenses/apache-2.0.txt"
           ;;
         bsd2|bsd-2)
-          LICENSE="${AUTOGEN}/licenses/bsd-2-clause.txt"
+          LICENSE="${SRCDIR}/licenses/bsd-2-clause.txt"
           ;;
         bsd3|bsd-3)
-          LICENSE="${AUTOGEN}/licenses/bsd-3-clause.txt"
+          LICENSE="${SRCDIR}/licenses/bsd-3-clause.txt"
           ;;
         bsd4|bsd-4)
-          LICENSE="${AUTOGEN}/licenses/bsd-4-clause.txt"
+          LICENSE="${SRCDIR}/licenses/bsd-4-clause.txt"
           ;;
         gpl2|gpl-2)
-          LICENSE="${AUTOGEN}/licenses/gpl-2.txt"
+          LICENSE="${SRCDIR}/licenses/gpl-2.txt"
           ;;
         gpl3|gpl-3)
-          LICENSE="${AUTOGEN}/licenses/gpl-3.txt"
+          LICENSE="${SRCDIR}/licenses/gpl-3.txt"
           ;;
         lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
-          LICENSE="${AUTOGEN}/licenses/lgpl-2.1.txt"
+          LICENSE="${SRCDIR}/licenses/lgpl-2.1.txt"
           ;;
         mit)
-          LICENSE="${AUTOGEN}/licenses/mit.txt"
+          LICENSE="${SRCDIR}/licenses/mit.txt"
           ;;
         *)
           echo "Invalid license selected: ${OPTARG}" >&2
