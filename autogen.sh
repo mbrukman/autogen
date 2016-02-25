@@ -23,7 +23,7 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-declare -r SRCDIR="$(dirname $0)"
+declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $0)}"
 
 LICENSE="${SRCDIR}/licenses/apache-2.0.txt"
 COPYRIGHT_HOLDER="Google Inc."
