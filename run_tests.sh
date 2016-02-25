@@ -88,11 +88,18 @@ function run_one_test() {
 }
 
 function run_all_tests() {
+  local overall_status=0
   for input in ${SRCDIR}/testdata/*.in; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
     run_one_test "${input}" "${expected_out}" "${expected_err}"
+    local test_status=$?
+    if [[ ${test_status} -ne 0 ]]; then
+      overall_status=${test_status}
+    fi
   done
+
+  return ${overall_status}
 }
 
 run_all_tests
