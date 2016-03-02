@@ -47,7 +47,7 @@ readonly TODO_COMMENT="TODO: High-level file comment."
 function printFileCommentTemplate() {
   local comment=$1
   # Fit into 80 cols: repeat enough times, depending on our comment width.
-  local repeat=$(echo 80 / $(echo -n ${comment} | wc -c) | bc)
+  local repeat=$(echo 80 / $(echo -n "${comment}" | wc -c) | bc)
   echo $comment
   perl -e "print \"$comment\" x $repeat . \"\n\""
   echo $comment
@@ -149,6 +149,12 @@ case "$1" in
   *.hs)
     printLicenseNonHashComment "--"
     printFileCommentTemplate "--"
+    ;;
+
+  *.html | *.xml)
+    echo "<!--"
+    printLicenseNonHashComment " "
+    echo "-->"
     ;;
 
   *.jsonnet)
