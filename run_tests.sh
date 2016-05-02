@@ -27,6 +27,9 @@ declare -r SRCDIR="${TEST_SRCDIR:-$(pwd)}"
 # Set temp directory from environment, if running under Bazel.
 declare -r TMPDIR="${TEST_TMPDIR:-${TEMPDIR:-${TMPDIR:-/tmp}}}"
 
+# Set verbosity level; 0=mostly silent, higher numbers for more output.
+declare -r VERBOSE="${VERBOSE:-0}"
+
 # Args:
 #   $1: input file
 #   $2: expected stdout
@@ -70,7 +73,9 @@ function run_one_test() {
     fi
   fi
 
-  echo -e "${status} ${filebase}"
+  if [ "${VERBOSE}" -ge 1 ] || [ ${status_code} -ne 0 ]; then
+    echo -e "${status} ${filebase}"
+  fi
 
   if [ ${stdout} -eq 0 ]; then
     echo "  Differences in stdout; compare via: diff -u ${expected_out} ${actual_out}"
@@ -88,16 +93,37 @@ function run_one_test() {
 }
 
 function run_all_tests() {
+  local num_passed_tests=0
+  local num_failed_tests=0
+  local num_total_tests=0
   local overall_status=0
+
   for input in ${SRCDIR}/testdata/*.in; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
     run_one_test "${input}" "${expected_out}" "${expected_err}"
     local test_status=$?
-    if [[ ${test_status} -ne 0 ]]; then
+    (( num_total_tests += 1 ))
+    if [[ ${test_status} -eq 0 ]]; then
+      (( num_passed_tests += 1 ))
+    else
+      (( num_failed_tests += 1 ))
       overall_status=${test_status}
     fi
   done
+
+  if [ -t 1 ]; then
+    local passed="\033[0;32mPASSED\033[0m"
+    local failed="\033[0;31mFAILED\033[0m"
+  else
+    local passed="PASSED"
+    local failed="FAILED"
+  fi
+
+  echo -e "${passed} ${num_passed_tests} / ${num_total_tests} tests"
+  if [[ "${num_failed_tests}" -gt 0 ]]; then
+    echo -e "${failed} ${num_failed_tests} / ${num_total_tests} tests"
+  fi
 
   return ${overall_status}
 }
