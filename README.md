@@ -46,9 +46,9 @@ You have two options:
 * via [Bazel](http://bazel.io/): `bazel test //:all`
 * via Make: `make test`
 
-Either way, the test will process all files in `testdata/` and tell you which
-passed or failed. Bazel is typically faster, especially when rerunning tests,
-due to built-in caching.
+Either way, the test will process all files in [`testdata/`](testdata) and tell
+you which passed or failed. Bazel is typically faster, especially when rerunning
+tests, due to built-in caching.
 
 License
 -------
