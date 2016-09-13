@@ -23,7 +23,7 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $0)}"
+declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $(realpath $0))}"
 
 # Path to license file will be computed from LICENSE_NAME below.
 LICENSE_NAME="apache"
