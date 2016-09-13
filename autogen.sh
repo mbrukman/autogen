@@ -25,12 +25,14 @@
 
 declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $0)}"
 
-LICENSE="${SRCDIR}/licenses/apache-2.0.txt"
+LICENSE_NAME="apache"
+LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
 COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
+MODIFY_FILE_INPLACE=0
 
 function printLicenseWithYear() {
-  cat "${LICENSE}" \
+  cat "${LICENSE_FILE}" \
     | sed "s/%YEAR%/${YEAR}/" \
     | sed "s/%COPYRIGHT_HOLDER%/${COPYRIGHT_HOLDER}/"
 }
@@ -41,6 +43,18 @@ function printLicenseNonHashComment() {
 
 function printLicenseHashComment() {
   printLicenseWithYear | sed -E "s/^/# /;s/ +$//"
+}
+
+# Prepend piped-in text to a file in-place.
+#
+# Args:
+#   $1: filename to modify
+function prependToFileInPlace() {
+  local -r target="${1}"
+  local -r tempfile="$(mktemp /tmp/$(basename $0).XXXXXX)"
+  cat - "${target}" > "${tempfile}"
+  mv -f "${tempfile}" "${target}"
+  rm -f "${tempfile}"
 }
 
 readonly TODO_COMMENT="TODO: High-level file comment."
@@ -54,40 +68,45 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
-while getopts c:l:y: opt ; do
+while getopts c:il:y: opt ; do
   case "${opt}" in
     c)
       COPYRIGHT_HOLDER="${OPTARG}"
       ;;
 
+    i)
+      MODIFY_FILE_INPLACE=1
+      ;;
+
     l)
-      case "${OPTARG}" in
+      LICENSE_NAME="${OPTARG}"
+      case "${LICENSE_NAME}" in
         apache)
-          LICENSE="${SRCDIR}/licenses/apache-2.0.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
           ;;
         bsd2|bsd-2)
-          LICENSE="${SRCDIR}/licenses/bsd-2-clause.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/bsd-2-clause.txt"
           ;;
         bsd3|bsd-3)
-          LICENSE="${SRCDIR}/licenses/bsd-3-clause.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/bsd-3-clause.txt"
           ;;
         bsd4|bsd-4)
-          LICENSE="${SRCDIR}/licenses/bsd-4-clause.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/bsd-4-clause.txt"
           ;;
         gpl2|gpl-2)
-          LICENSE="${SRCDIR}/licenses/gpl-2.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/gpl-2.txt"
           ;;
         gpl3|gpl-3)
-          LICENSE="${SRCDIR}/licenses/gpl-3.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/gpl-3.txt"
           ;;
         lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
-          LICENSE="${SRCDIR}/licenses/lgpl-2.1.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/lgpl-2.1.txt"
           ;;
         mit)
-          LICENSE="${SRCDIR}/licenses/mit.txt"
+          LICENSE_FILE="${SRCDIR}/licenses/mit.txt"
           ;;
         *)
-          echo "Invalid license selected: ${OPTARG}" >&2
+          echo "Invalid license selected: ${LICENSE_NAME}" >&2
           exit 1
       esac
       ;;
@@ -104,9 +123,10 @@ if [[ $# -eq 0 ]]; then
 Syntax: $0 [options] <filename>
 
 Options:
-  -c [copyright holder]
-  -l [license]
-  -y [year]
+  -c [copyright holder]    set copyright holder (default: "${COPYRIGHT_HOLDER}")
+  -i                       modify the given file in-place
+  -l [license]             choose the license (default: "${LICENSE_NAME}")
+  -y [year]                choose the year (default: ${YEAR})
 
 Licenses:
   apache:       Apache 2.0
@@ -120,7 +140,20 @@ Licenses:
   exit 1
 fi
 
-case "$1" in
+declare -r FILE="$1"
+
+# Re-run this script with all the same flags, minus the in-place flag.
+if [[ "${MODIFY_FILE_INPLACE}" -eq 1 ]]; then
+  $0 \
+    -c "${COPYRIGHT_HOLDER}" \
+    -l "${LICENSE_NAME}" \
+    -y "${YEAR}" \
+    "${FILE}" \
+    | prependToFileInPlace "${FILE}"
+  exit $?
+fi
+
+case "${FILE}" in
 
   # TODO(mbrukman): in some projects, *.h are actually C++ files where users
   # want to use C++ style "//" comments. How can we handle this flexibility?
@@ -295,7 +328,7 @@ EOF
     ;;
 
   *)
-    echo "File type not recognized: $1" >&2
+    echo "File type not recognized: ${FILE}" >&2
     exit 1
     ;;
 
