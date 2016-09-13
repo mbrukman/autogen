@@ -25,8 +25,9 @@
 
 declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $0)}"
 
+# Path to license file will be computed from LICENSE_NAME below.
 LICENSE_NAME="apache"
-LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
+LICENSE_FILE=""
 COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
 MODIFY_FILE_INPLACE=0
@@ -80,36 +81,8 @@ while getopts c:il:y: opt ; do
 
     l)
       LICENSE_NAME="${OPTARG}"
-      case "${LICENSE_NAME}" in
-        apache)
-          LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
-          ;;
-        bsd2|bsd-2)
-          LICENSE_FILE="${SRCDIR}/licenses/bsd-2-clause.txt"
-          ;;
-        bsd3|bsd-3)
-          LICENSE_FILE="${SRCDIR}/licenses/bsd-3-clause.txt"
-          ;;
-        bsd4|bsd-4)
-          LICENSE_FILE="${SRCDIR}/licenses/bsd-4-clause.txt"
-          ;;
-        gpl2|gpl-2)
-          LICENSE_FILE="${SRCDIR}/licenses/gpl-2.txt"
-          ;;
-        gpl3|gpl-3)
-          LICENSE_FILE="${SRCDIR}/licenses/gpl-3.txt"
-          ;;
-        lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
-          LICENSE_FILE="${SRCDIR}/licenses/lgpl-2.1.txt"
-          ;;
-        mit)
-          LICENSE_FILE="${SRCDIR}/licenses/mit.txt"
-          ;;
-        *)
-          echo "Invalid license selected: ${LICENSE_NAME}" >&2
-          exit 1
-      esac
       ;;
+
     y)
       YEAR="${OPTARG}"
       ;;
@@ -117,6 +90,37 @@ while getopts c:il:y: opt ; do
 done
 
 shift $((OPTIND - 1))
+
+# Compute license file path given the license name.
+case "${LICENSE_NAME}" in
+  apache)
+    LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
+    ;;
+  bsd2|bsd-2)
+    LICENSE_FILE="${SRCDIR}/licenses/bsd-2-clause.txt"
+    ;;
+  bsd3|bsd-3)
+    LICENSE_FILE="${SRCDIR}/licenses/bsd-3-clause.txt"
+    ;;
+  bsd4|bsd-4)
+    LICENSE_FILE="${SRCDIR}/licenses/bsd-4-clause.txt"
+    ;;
+  gpl2|gpl-2)
+    LICENSE_FILE="${SRCDIR}/licenses/gpl-2.txt"
+    ;;
+  gpl3|gpl-3)
+    LICENSE_FILE="${SRCDIR}/licenses/gpl-3.txt"
+    ;;
+  lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
+    LICENSE_FILE="${SRCDIR}/licenses/lgpl-2.1.txt"
+    ;;
+  mit)
+    LICENSE_FILE="${SRCDIR}/licenses/mit.txt"
+    ;;
+  *)
+    echo "Invalid license selected: ${LICENSE_NAME}" >&2
+    exit 1
+esac
 
 if [[ $# -eq 0 ]]; then
   echo "\
