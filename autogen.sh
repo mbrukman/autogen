@@ -123,7 +123,7 @@ case "${LICENSE_NAME}" in
 esac
 
 if [[ $# -eq 0 ]]; then
-  echo "\
+  cat >&2 << EOF
 Syntax: $0 [options] <filename>
 
 Options:
@@ -140,7 +140,8 @@ Licenses:
   gpl2:         GPL 2
   gpl3:         GPL 3
   lgpl2.1:      LGPL 2.1 (aliases: lgpl, lgpl2)
-  mit:          MIT" >&2
+  mit:          MIT
+EOF
   exit 1
 fi
 
