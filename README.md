@@ -10,7 +10,14 @@ Usage:
 autogen.sh -c [copyright holder] -l [license] [filename]
 ```
 
-To get a list of supported licenses, run `autogen.sh` with no parameters.
+Modify an existing file in-place:
+
+```bash
+autogen.sh -i [...other params as above...]
+```
+
+To get a list of supported licenses, or to see the full set of flags, run
+`autogen.sh` with no parameters.
 
 File type or language is determined based on the full filename or extension, as
 appropriate. See [`autogen.sh`](autogen.sh) for a list of recognized file types.
