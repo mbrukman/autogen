@@ -34,10 +34,10 @@ if [ -n "${TEST_SRCDIR:-}" ]; then
 else
   declare -r SRCDIR="$(dirname $0)/.."
   declare -r TMPDIR="$(mktemp -d /tmp/$(basename $0).XXXXXX)"
-  trap cleanup EXIT INT TERM
   function cleanup() {
     rm -rf "${TMPDIR}"
   }
+  trap cleanup EXIT INT TERM
 fi
 
 declare -r RANDOM_DATA="$(date)"
