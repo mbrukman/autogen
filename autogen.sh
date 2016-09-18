@@ -28,7 +28,41 @@
 if [ -n "${TEST_SRCDIR:-}" ]; then
   declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
 else
-  declare -r SRCDIR="$(dirname $0)"
+  # If the file pointing to this script is a symlink, we need to resolve it.
+  # However, it may be pointing to another symlink, so we have to resolve the
+  # entire chain to find the root, and find the licenses relative to the
+  # directory that holds the file.
+  #
+  # Unfortunately, different tools are available on different OSes, and even
+  # when the same tool is available, it works differently on different systems.
+  if which realpath > /dev/null 2>&1 ; then
+    declare -r SRCDIR="$(dirname $(realpath $0))"
+  elif which greadlink > /dev/null 2>&1 ; then
+    # On OS X, Homebrew provides `greadlink` which is GNU readlink that works as
+    # it does on Linux. To get it, run: `brew install coreutils`.
+    declare -r SRCDIR="$(dirname $(greadlink -f $0))"
+  elif which readlink > /dev/null 2>&1 ; then
+    # On Linux, `readlink -f` can be used to resolve symlinks to the final
+    # destination. However, on OS X, `readlink` does not have a `-f` flag.
+    if [[ "$(uname -s)" == "Darwin" ]]; then
+      symlink_target="${0}"
+      while [ -h "${symlink_target}" ] || [ -L "${symlink_target}" ]; do
+        next_symlink_target="$(readlink "${symlink_target}" || true)"
+        if [ -z "${next_symlink_target}" ] || [[ "${symlink_target}" == "${next_symlink_target}" ]]; then
+          break
+        fi
+        symlink_target="${next_symlink_target}"
+      done
+      declare -r SRCDIR="$(dirname "${symlink_target}")"
+      # Cleanup the variable namespace.
+      unset symlink_target
+      unset next_symlink_target
+    else
+      declare -r SRCDIR="$(dirname $(readlink -f $0))"
+    fi
+  else
+    declare -r SRCDIR="$(dirname $0)"
+  fi
 fi
 
 # Path to license file will be computed from LICENSE_NAME below.

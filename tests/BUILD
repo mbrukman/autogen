@@ -45,3 +45,13 @@ sh_test(
     size = "small",
     timeout = "short",
 )
+
+sh_test(
+    name = "symlink_tests",
+    srcs = ["symlink_tests.sh"],
+    data = [
+        "//:autogen",
+    ],
+    size = "small",
+    timeout = "short",
+)
