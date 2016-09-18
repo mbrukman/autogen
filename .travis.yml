@@ -17,4 +17,9 @@
 os:
   - linux
   - osx
+addons:
+  apt:
+    packages:
+      - bc
+      - ed
 script: make test
