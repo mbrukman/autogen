@@ -35,8 +35,8 @@ Sample outputs:
 Developing
 ----------
 
-To add a few file type or feature, change `autogen.sh` and add several files to
-the `testdata/` directory, namely:
+To add a few file type or feature, change [`autogen.sh`](autogen.sh) and add
+several files to the [`testdata`](testdata) directory, namely:
 
 * `testdata/<feature>.in` - the input file containing command-line args to pass
   to `autogen.sh`
@@ -47,6 +47,15 @@ To generate the `*.out` and `*.err` files automatically, just add the `*.in`
 files and run `make regen`. Then, examine the resulting `*.out` and `*.err`
 files.
 
+Other custom tests can be added as separate scripts in the [`tests`](tests)
+directory. If the file has the suffix `_tests.sh`, it will be automatically
+picked up by [`tests/run_all_tests.sh`](tests/run_all_tests.sh) script, which
+means that `make test` will automatically run it without any other changes.
+
+Be sure to also add an entry for it in [`tests/BUILD`](tests/BUILD) file for
+Bazel to be able to run it as well, including appropriate dependencies on any
+data files it may need.
+
 Testing
 -------
 
@@ -55,9 +64,8 @@ You have two options:
 * via [Bazel](http://bazel.io/): `bazel test //...`
 * via Make: `make test`
 
-Either way, the test will process all files in [`testdata/`](testdata) and tell
-you which passed or failed. Bazel is typically faster, especially when rerunning
-tests, due to built-in caching.
+Bazel is typically faster, especially when rerunning tests, due to built-in
+caching.
 
 License
 -------
