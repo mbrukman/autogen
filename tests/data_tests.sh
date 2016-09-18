@@ -83,12 +83,18 @@ function run_one_test() {
 
   if [ ${stdout} -eq 0 ]; then
     echo "  Differences in stdout; compare via: diff -u ${expected_out} ${actual_out}"
+    if [ "${VERBOSE}" -ge 2 ]; then
+      diff -u "${expected_out}" "${actual_out}"
+    fi
   else
     rm -f "${actual_out}"
   fi
 
   if [ ${stderr} -eq 0 ]; then
     echo "  Differences in stderr; compare via: diff -u ${expected_err} ${actual_err}"
+    if [ "${VERBOSE}" -ge 2 ]; then
+      diff -u "${expected_err}" "${actual_err}"
+    fi
   else
     rm -f "${actual_err}"
   fi

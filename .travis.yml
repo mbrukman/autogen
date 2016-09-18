@@ -23,3 +23,6 @@ addons:
       - bc
       - ed
 script: make test
+env:
+  global:
+    - VERBOSE=2
