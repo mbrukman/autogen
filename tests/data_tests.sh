@@ -44,8 +44,8 @@ function run_one_test() {
   local expected_err="$3"
 
   local filebase="$(basename "${input%.in}")"
-  local actual_out="$(mktemp "/${TMPDIR}/${filebase}.out.XXXXXX")"
-  local actual_err="$(mktemp "/${TMPDIR}/${filebase}.err.XXXXXX")"
+  local actual_out="$(mktemp "${TMPDIR}/${filebase}.out.XXXXXX")"
+  local actual_err="$(mktemp "${TMPDIR}/${filebase}.err.XXXXXX")"
 
   # Run tests in a hermetic environment such that they don't break every year.
   bash -c "${SRCDIR}/autogen.sh -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
@@ -83,12 +83,18 @@ function run_one_test() {
 
   if [ ${stdout} -eq 0 ]; then
     echo "  Differences in stdout; compare via: diff -u ${expected_out} ${actual_out}"
+    if [ "${VERBOSE}" -ge 2 ]; then
+      diff -u "${expected_out}" "${actual_out}"
+    fi
   else
     rm -f "${actual_out}"
   fi
 
   if [ ${stderr} -eq 0 ]; then
     echo "  Differences in stderr; compare via: diff -u ${expected_err} ${actual_err}"
+    if [ "${VERBOSE}" -ge 2 ]; then
+      diff -u "${expected_err}" "${actual_err}"
+    fi
   else
     rm -f "${actual_err}"
   fi
