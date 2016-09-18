@@ -14,9 +14,34 @@
 #
 ################################################################################
 
-package(default_visibility = ["//visibility:public"])
+sh_test(
+    name = "data_tests",
+    srcs = ["data_tests.sh"],
+    data = [
+        "//:autogen",
+        "//licenses",
+        "//testdata",
+    ],
+    size = "small",
+    timeout = "short",
+)
 
-sh_binary(
-    name = "autogen",
-    srcs = ["autogen.sh"],
+sh_test(
+    name = "inplace_tests",
+    srcs = ["inplace_tests.sh"],
+    data = [
+        "//:autogen",
+    ],
+    size = "small",
+    timeout = "short",
+)
+
+sh_test(
+    name = "inplace_perm_tests",
+    srcs = ["inplace_perm_tests.sh"],
+    data = [
+        "//:autogen",
+    ],
+    size = "small",
+    timeout = "short",
 )

@@ -22,19 +22,27 @@
 
 set -eu
 
-declare -r TEST_SRCDIR="$(dirname $0)/.."
-declare -r TEST_TMPDIR="$(mktemp -d /tmp/$(basename $0).XXXXXX)"
-
-function cleanup() {
-  rm -rf "${TEST_TMPDIR}"
-}
-
-trap cleanup EXIT INT TERM
+# If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
+# otherwise, default to dir of current file and search relative to that.
+#
+# Also, if we're running via Bazel, it already defines $TEST_TMPDIR which we
+# don't have to clean up; otherwise, create our own dir and schedule cleanup.
+if [ -n "${TEST_SRCDIR:-}" ]; then
+  declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
+  declare -r TMPDIR="${TEST_TMPDIR}"
+else
+  declare -r SRCDIR="$(dirname $0)/.."
+  declare -r TMPDIR="$(mktemp -d /tmp/$(basename $0).XXXXXX)"
+  function cleanup() {
+    rm -rf "${TMPDIR}"
+  }
+  trap cleanup EXIT INT TERM
+fi
 
 declare -i num_passed=0
 declare -i num_failed=0
 
-declare -r AUTOGEN="${TEST_SRCDIR}/autogen.sh"
+declare -r AUTOGEN="${SRCDIR}/autogen.sh"
 
 # Pair-wise associated test cases of files and permissions.
 declare -ar FILES=(file.sh file.py)
@@ -55,7 +63,7 @@ function getFilePermissions() {
 function runTests() {
   for i in "${!FILES[@]}"; do
     local file="${FILES[i]}"
-    local file_path="${TEST_TMPDIR}/${file}"
+    local file_path="${TMPDIR}/${file}"
     local perm="${PERM[i]}"
 
     touch "${file_path}"

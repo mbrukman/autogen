@@ -23,7 +23,13 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-declare -r SRCDIR="${TEST_SRCDIR:-$(dirname $0)}"
+# If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
+# otherwise, default to dir of current file and search relative to that.
+if [ -n "${TEST_SRCDIR:-}" ]; then
+  declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
+else
+  declare -r SRCDIR="$(dirname $0)"
+fi
 
 # Path to license file will be computed from LICENSE_NAME below.
 LICENSE_NAME="apache"

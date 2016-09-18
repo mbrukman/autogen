@@ -21,8 +21,12 @@
 ################################################################################
 
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
-# otherwise, default to current dir and find it relative to that.
-declare -r SRCDIR="${TEST_SRCDIR:-$(pwd)}"
+# otherwise, default to dir of current file and search relative to that.
+if [ -n "${TEST_SRCDIR:-}" ]; then
+  declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
+else
+  declare -r SRCDIR="$(dirname $0)/.."
+fi
 
 # Set temp directory from environment, if running under Bazel.
 declare -r TMPDIR="${TEST_TMPDIR:-${TEMPDIR:-${TMPDIR:-/tmp}}}"
@@ -97,6 +101,12 @@ function run_all_tests() {
   local num_failed_tests=0
   local num_total_tests=0
   local overall_status=0
+
+  local -r num_files="$(ls -1 ${SRCDIR}/testdata/*.in | wc -l)"
+  if [[ ${num_files} -eq 0 ]]; then
+    echo "No files found in ${SRCDIR}/testdata; exiting." >&2
+    exit 1
+  fi
 
   for input in ${SRCDIR}/testdata/*.in; do
     local expected_out="${input%.in}.out"
