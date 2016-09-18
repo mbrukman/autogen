@@ -32,7 +32,7 @@ function cleanup() {
 
 trap cleanup EXIT INT TERM
 
-declare -r RANDOM_DATA="$(date | md5)"
+declare -r RANDOM_DATA="$(date)"
 
 declare -i num_passed=0
 declare -i num_failed=0
