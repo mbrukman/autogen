@@ -51,11 +51,15 @@ function printLicenseHashComment() {
 # Args:
 #   $1: filename to modify
 function prependToFileInPlace() {
-  local -r target="${1}"
-  local -r tempfile="$(mktemp /tmp/$(basename $0).XXXXXX)"
-  cat - "${target}" > "${tempfile}"
-  mv -f "${tempfile}" "${target}"
-  rm -f "${tempfile}"
+  local -r file="${1}"
+
+  # Prepend stdin to the beginning of the file using `ed`.
+  cat | ed -s "${file}" << EOF
+0a
+$(cat -)
+.
+w
+EOF
 }
 
 readonly TODO_COMMENT="TODO: High-level file comment."
