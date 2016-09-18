@@ -52,7 +52,7 @@ Testing
 
 You have two options:
 
-* via [Bazel](http://bazel.io/): `bazel test //:all`
+* via [Bazel](http://bazel.io/): `bazel test //...`
 * via Make: `make test`
 
 Either way, the test will process all files in [`testdata/`](testdata) and tell
