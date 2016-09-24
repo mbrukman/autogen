@@ -22,6 +22,8 @@
 
 set -eu
 
+source "$(dirname $0)/test_util.sh"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 #
@@ -38,9 +40,6 @@ else
   }
   trap cleanup EXIT INT TERM
 fi
-
-declare -i num_passed=0
-declare -i num_failed=0
 
 declare -r AUTOGEN="${SRCDIR}/autogen.sh"
 
@@ -73,38 +72,16 @@ function runTests() {
     # Verify whether new permissions match the original file permissions.
     local new_perm="$(getFilePermissions "${file_path}")"
     if [[ "${perm}" == "${new_perm}" ]]; then
-      num_passed=$((num_passed+1))
+      test_record_passed
     else
       echo "Permissions mismatch for: ${file}" >&2
       echo "  expected: ${perm}; actual: ${new_perm}" >&2
-      num_failed=$((num_failed+1))
+      test_record_failed
     fi
   done
 }
 
 runTests
 
-declare -ir NUM_TOTAL=$((num_passed + num_failed))
-
-if [[ ${num_passed} -gt 0 ]]; then
-  if [ -t 1 ]; then
-    declare -r PASSED="\033[0;32mPASSED\033[0m"
-  else
-    declare -r PASSED="PASSED"
-  fi
-  echo -e "${PASSED}: ${num_passed} / ${NUM_TOTAL}"
-fi
-
-if [[ ${num_failed} -gt 0 ]]; then
-  if [ -t 1 ]; then
-    declare -r FAILED="\033[0;31mFAILED\033[0m"
-  else
-    declare -r FAILED="FAILED"
-  fi
-  echo -e "${FAILED}: ${num_failed} / ${NUM_TOTAL}"
-  declare -r STATUS_CODE=1
-else
-  declare -r STATUS_CODE=0
-fi
-
-exit ${STATUS_CODE}
+test_print_status
+test_exit

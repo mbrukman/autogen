@@ -27,8 +27,8 @@ for file in *_tests.sh; do
   fi
   echo "Running tests in ${file} ..."
   bash "${file}" \
-      && test_print_passed "${file}" \
-      || test_print_failed "${file}"
+      && test_record_and_print_passed "${file}" \
+      || test_record_and_print_failed "${file}"
   echo
 done
 

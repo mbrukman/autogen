@@ -47,12 +47,12 @@ function test_reset() {
 }
 
 # Record test as having passed.
-function test_silent_passed() {
+function test_record_passed() {
   (( num_passed_tests += 1 ))
   (( num_total_tests += 1 ))
 }
 
-# Record test as having passed and print a status message.
+# Print a status message for a passed test.
 #
 # Args:
 #   $1: (optional) additional status to print out
@@ -61,19 +61,26 @@ function test_print_passed() {
   if [ -n "${status_msg}" ]; then
     status_msg=": ${status_msg}"
   fi
-
-  test_silent_passed
   echo -e "${PASSED}${status_msg}"
 }
 
+# Record a test having passed and print a status message.
+#
+# Args:
+#   $1: (optional) additional status to print out
+function test_record_and_print_passed() {
+  test_record_passed
+  test_print_passed "${1:-}"
+}
+
 # Record test as having failed.
-function test_silent_failed() {
+function test_record_failed() {
   (( num_failed_tests += 1 ))
   (( num_total_tests += 1 ))
   (( status_code = 1 ))
 }
 
-# Record test as having failed and print a status message.
+# Print a status message for a failed test.
 #
 # Args:
 #   $1: (optional) additional status to print out
@@ -82,9 +89,16 @@ function test_print_failed() {
   if [ -n "${status_msg}" ]; then
     status_msg=": ${status_msg}"
   fi
-
-  test_silent_failed
   echo -e "${FAILED}${status_msg}"
+}
+
+# Record a test having failed and print a status message.
+#
+# Args:
+#   $1: (optional) additional status to print out
+function test_record_and_print_failed() {
+  test_record_failed
+  test_print_failed "${1:-}"
 }
 
 # Print overall status, including the counters.

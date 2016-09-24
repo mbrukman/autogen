@@ -20,6 +20,8 @@
 #
 ################################################################################
 
+source "$(dirname $0)/test_util.sh"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 if [ -n "${TEST_SRCDIR:-}" ]; then
@@ -62,19 +64,10 @@ function run_one_test() {
   fi
 
   local status_code=0
-  if [ -t 1 ]; then
-    local status="\033[0;32mPASSED\033[0m"
-  else
-    local status="PASSED"
-  fi
-
+  local status="${PASSED}"
   if [ ${stdout} -eq 0 ] || [ ${stderr} -eq 0 ]; then
     status_code=1
-    if [ -t 1 ]; then
-      status="\033[0;31mFAILED\033[0m"
-    else
-      status="FAILED"
-    fi
+    status="${FAILED}"
   fi
 
   if [ "${VERBOSE}" -ge 1 ] || [ ${status_code} -ne 0 ]; then
@@ -103,11 +96,6 @@ function run_one_test() {
 }
 
 function run_all_tests() {
-  local num_passed_tests=0
-  local num_failed_tests=0
-  local num_total_tests=0
-  local overall_status=0
-
   local -r num_files="$(ls -1 ${SRCDIR}/testdata/*.in | wc -l)"
   if [[ ${num_files} -eq 0 ]]; then
     echo "No files found in ${SRCDIR}/testdata; exiting." >&2
@@ -117,31 +105,13 @@ function run_all_tests() {
   for input in ${SRCDIR}/testdata/*.in; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
-    run_one_test "${input}" "${expected_out}" "${expected_err}"
-    local test_status=$?
-    (( num_total_tests += 1 ))
-    if [[ ${test_status} -eq 0 ]]; then
-      (( num_passed_tests += 1 ))
-    else
-      (( num_failed_tests += 1 ))
-      overall_status=${test_status}
-    fi
+    run_one_test "${input}" "${expected_out}" "${expected_err}" \
+        && test_record_passed \
+        || test_record_failed
   done
 
-  if [ -t 1 ]; then
-    local passed="\033[0;32mPASSED\033[0m"
-    local failed="\033[0;31mFAILED\033[0m"
-  else
-    local passed="PASSED"
-    local failed="FAILED"
-  fi
-
-  echo -e "${passed} ${num_passed_tests} / ${num_total_tests} tests"
-  if [[ "${num_failed_tests}" -gt 0 ]]; then
-    echo -e "${failed} ${num_failed_tests} / ${num_total_tests} tests"
-  fi
-
-  return ${overall_status}
+  test_print_status
+  test_return
 }
 
 run_all_tests

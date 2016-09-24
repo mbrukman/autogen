@@ -23,6 +23,8 @@
 
 set -eu
 
+source "$(dirname $0)/test_util.sh"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 #
@@ -42,9 +44,6 @@ fi
 
 declare -r RANDOM_DATA="$(date)"
 
-declare -i num_passed=0
-declare -i num_failed=0
-
 for ext in sh py rb hs; do
   actual_file="${TMPDIR}/actual.${ext}"
   expected_file="${TMPDIR}/expected.${ext}"
@@ -58,35 +57,10 @@ for ext in sh py rb hs; do
   echo "${RANDOM_DATA}" >> "${expected_file}"
 
   # Compare the two files.
-  diff -u "${expected_file}" "${actual_file}"
-  if [[ $? -eq 0 ]]; then
-    num_passed=$((num_passed+1))
-  else
-    num_failed=$((num_failed+1))
-  fi
+  diff -u "${expected_file}" "${actual_file}" \
+      && test_record_passed \
+      || test_record_failed
 done
 
-declare -ir NUM_TOTAL=$((num_passed + num_failed))
-
-if [[ ${num_passed} -gt 0 ]]; then
-  if [ -t 1 ]; then
-    declare -r PASSED="\033[0;32mPASSED\033[0m"
-  else
-    declare -r PASSED="PASSED"
-  fi
-  echo -e "${PASSED}: ${num_passed} / ${NUM_TOTAL}"
-fi
-
-if [[ ${num_failed} -gt 0 ]]; then
-  if [ -t 1 ]; then
-    declare -r FAILED="\033[0;31mFAILED\033[0m"
-  else
-    declare -r FAILED="FAILED"
-  fi
-  echo -e "${FAILED}: ${num_failed} / ${NUM_TOTAL}"
-  declare -r STATUS_CODE=1
-else
-  declare -r STATUS_CODE=0
-fi
-
-exit ${STATUS_CODE}
+test_print_status
+test_exit
