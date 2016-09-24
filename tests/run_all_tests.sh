@@ -18,11 +18,20 @@
 
 set -eu
 
+source "$(dirname $0)/test_util.sh"
+
 for file in *_tests.sh; do
   # Exclude the current file to avoid infinite loop.
   if [[ "$(basename "${file}")" == "$(basename $0)" ]]; then
     continue
   fi
   echo "Running tests in ${file} ..."
-  bash "${file}"
+  bash "${file}" \
+      && test_print_passed "${file}" \
+      || test_print_failed "${file}"
+  echo
 done
+
+echo "Overall summary:"
+test_print_status
+test_exit
