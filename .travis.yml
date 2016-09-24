@@ -14,15 +14,58 @@
 #
 ################################################################################
 
-os:
-  - linux
-  - osx
+language: generic
+sudo: false
+
 addons:
   apt:
     packages:
       - bc
       - ed
-script: make test
-env:
-  global:
-    - VERBOSE=2
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      env: TEST_RUNNER=make VERBOSE=2
+      script: make test
+    - os: linux
+      dist: trusty
+      env: TEST_RUNNER=bazel
+
+      # We cannot use the convenient JDK installation method
+      #     jdk: oraclejdk8
+      #
+      # because Bazel has explicit dependency on one of several JDK packages and
+      # fails with the following error:
+      #
+      #    The following packages have unmet dependencies:
+      #      bazel : Depends: google-jdk but it is not installable or
+      #                       java8-jdk but it is not installable or
+      #                       java8-sdk but it is not installable
+      #    E: Unable to correct problems, you have held broken packages.
+      #
+      # if we use this feature. Instead, we need to install the JDK ourselves.
+
+      # Also, we cannot use the APT addon because neither the repository nor the Bazel
+      # package are whitelisted. This means we must use `sudo` and hence cannot
+      # run on the container-based infrastructure.
+      sudo: required
+
+      before_script:
+        - sudo add-apt-repository -y ppa:webupd8team/java
+        - echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+        - echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+        - echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+        - curl "https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg" | sudo apt-key add -
+        - sudo apt-get update
+        - sudo apt-get install -qq -y oracle-java8-installer
+        - sudo apt-get install -qq -y bazel
+      script:
+        - bazel test //...
+    - os: osx
+      env: TEST_RUNNER=make VERBOSE=2
+      script: make test
+
+# Note: we cannot test with Bazel on OS X at this time, because Travis only
+# supports 10.9 Mavericks while Bazel requires 10.10 Yosemite or higher.
