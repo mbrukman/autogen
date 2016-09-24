@@ -18,6 +18,8 @@
 
 set -eu
 
+source "$(dirname $0)/test_util.sh"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 #
@@ -53,8 +55,6 @@ ln -s "${AUTOGEN_FULL_PATH}"   "${AUTOGEN_SYMLINKS[0]}"
 ln -s "${AUTOGEN_SYMLINKS[0]}" "${AUTOGEN_SYMLINKS[1]}"
 ln -s "${AUTOGEN_SYMLINKS[1]}" "${AUTOGEN_SYMLINKS[2]}"
 
-declare -i status_code=0
-
 for ext in hs ml pl rb py sh; do
   expected_file="${TMPDIR}/expected.${ext}"
   touch "${expected_file}"
@@ -64,26 +64,11 @@ for ext in hs ml pl rb py sh; do
     actual_file="${TMPDIR}/$(basename $autogen).actual.${ext}"
     touch "${actual_file}"
     "${autogen}" -i "${actual_file}"
-    if ! diff -u "${expected_file}" "${actual_file}" ; then
-      status_code=1
-    fi
+    diff -u "${expected_file}" "${actual_file}" \
+        && test_record_passed \
+        || test_record_failed
   done
 done
 
-if [[ ${status_code} -eq 0 ]]; then
-  if [ -t 1 ]; then
-    declare -r PASSED="\033[0;32mPASSED\033[0m"
-  else
-    declare -r PASSED="PASSED"
-  fi
-  echo -e "${PASSED}"
-else
-  if [ -t 1 ]; then
-    declare -r FAILED="\033[0;31mFAILED\033[0m"
-  else
-    declare -r FAILED="FAILED"
-  fi
-  echo -e "${FAILED}"
-fi
-
-exit ${status_code}
+test_print_status
+test_exit

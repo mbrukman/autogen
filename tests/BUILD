@@ -14,6 +14,14 @@
 #
 ################################################################################
 
+sh_library(
+    name = "test_util",
+    srcs = [
+        "test_util.sh",
+    ],
+    testonly = 1
+)
+
 sh_test(
     name = "data_tests",
     srcs = ["data_tests.sh"],
@@ -21,6 +29,7 @@ sh_test(
         "//:autogen",
         "//licenses",
         "//testdata",
+        ":test_util",
     ],
     size = "small",
     timeout = "short",
@@ -31,6 +40,7 @@ sh_test(
     srcs = ["inplace_tests.sh"],
     data = [
         "//:autogen",
+        ":test_util",
     ],
     size = "small",
     timeout = "short",
@@ -41,6 +51,7 @@ sh_test(
     srcs = ["inplace_perm_tests.sh"],
     data = [
         "//:autogen",
+        ":test_util",
     ],
     size = "small",
     timeout = "short",
@@ -51,6 +62,7 @@ sh_test(
     srcs = ["symlink_tests.sh"],
     data = [
         "//:autogen",
+        ":test_util",
     ],
     size = "small",
     timeout = "short",
