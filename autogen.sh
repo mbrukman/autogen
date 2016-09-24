@@ -71,6 +71,7 @@ LICENSE_FILE=""
 COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
 MODIFY_FILE_INPLACE=0
+SILENT=0
 
 function printLicenseWithYear() {
   cat "${LICENSE_FILE}" \
@@ -113,7 +114,7 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
-while getopts c:il:y: opt ; do
+while getopts c:il:sy: opt ; do
   case "${opt}" in
     c)
       COPYRIGHT_HOLDER="${OPTARG}"
@@ -125,6 +126,10 @@ while getopts c:il:y: opt ; do
 
     l)
       LICENSE_NAME="${OPTARG}"
+      ;;
+
+    s)
+      SILENT=1
       ;;
 
     y)
@@ -174,6 +179,7 @@ Options:
   -c [copyright holder]    set copyright holder (default: "${COPYRIGHT_HOLDER}")
   -i                       modify the given file in-place
   -l [license]             choose the license (default: "${LICENSE_NAME}")
+  -s                       silent: no error output for unknown file types
   -y [year]                choose the year (default: ${YEAR})
 
 Licenses:
@@ -377,8 +383,10 @@ EOF
     ;;
 
   *)
-    echo "File type not recognized: ${FILE}" >&2
-    exit 1
+    if [ ${SILENT} -eq 0 ] ; then
+      echo "File type not recognized: ${FILE}" >&2
+      exit 1
+    fi
     ;;
 
 esac
