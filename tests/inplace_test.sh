@@ -44,22 +44,24 @@ fi
 
 declare -r RANDOM_DATA="$(date)"
 
-for ext in sh py rb hs; do
-  actual_file="${TMPDIR}/actual.${ext}"
-  expected_file="${TMPDIR}/expected.${ext}"
+for ext in sh py rb hs ; do
+  for in_place in '-i' '--in-place' ; do
+    actual_file="${TMPDIR}/actual.${ext}"
+    expected_file="${TMPDIR}/expected.${ext}"
 
-  # Generate the actual file and update it in-place.
-  echo "${RANDOM_DATA}" > "${actual_file}"
-  "${SRCDIR}/autogen" -i "${actual_file}"
+    # Generate the actual file and update it in-place.
+    echo "${RANDOM_DATA}" > "${actual_file}"
+    "${SRCDIR}/autogen" "${in_place}" "${actual_file}"
 
-  # Generate the expected file using the usual means.
-  "${SRCDIR}/autogen" "${expected_file}" > "${expected_file}"
-  echo "${RANDOM_DATA}" >> "${expected_file}"
+    # Generate the expected file using the usual means.
+    "${SRCDIR}/autogen" "${expected_file}" > "${expected_file}"
+    echo "${RANDOM_DATA}" >> "${expected_file}"
 
-  # Compare the two files.
-  diff -u "${expected_file}" "${actual_file}" \
-      && test_record_passed \
-      || test_record_failed
+    # Compare the two files.
+    diff -u "${expected_file}" "${actual_file}" \
+        && test_record_passed \
+        || test_record_failed
+  done
 done
 
 test_print_status
