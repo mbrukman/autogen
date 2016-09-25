@@ -32,6 +32,12 @@ Sample outputs:
 * [LGPL 2.1, C++](testdata/lgpl2.1-acme-cpp.out)
 * [MIT, Makefile](testdata/mit-acme-makefile.out)
 
+Editor support
+--------------
+
+For details on adding Autogen support to your editor, please see
+the [`editors`](editors) directory.
+
 Developing
 ----------
 

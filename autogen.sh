@@ -362,7 +362,7 @@ EOF
     printLicenseWithYear
     ;;
 
-  *.vim)
+  *.vim | .vimrc | vimrc)
     printLicenseNonHashComment \"
     # Handle the file header locally; hard to pass a double-quote to function
     # which wants to double-quote its arguments.
