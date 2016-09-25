@@ -119,12 +119,21 @@ function show_help() {
 Syntax: $0 [options] <filename>
 
 Options:
-  -c [copyright holder]    set copyright holder (default: "${COPYRIGHT_HOLDER}")
-  -h                       show this help text
-  -i                       modify the given file in-place
-  -l [license]             choose the license (default: "${LICENSE_NAME}")
-  -s                       silent: no error output for unknown file types
-  -y [year]                choose the year (default: ${YEAR})
+  --copyright [copyright holder]
+                           set copyright holder (default: "${COPYRIGHT_HOLDER}")
+  --help                   show this help text
+  --in-place               modify the given file in-place
+  --license [license]      choose the license (default: "${LICENSE_NAME}")
+  --silent                 silent: no error output for unknown file types
+  --year [year]            choose the year (default: ${YEAR})
+
+Short-form aliases:
+  -c [copyright holder]    same as --copyright
+  -h                       same as --help
+  -i                       same as --in-place
+  -l [license]             same as --license
+  -s                       same as --silent
+  -y [year]                same as --year
 
 Licenses:
   apache:       Apache 2.0
@@ -138,33 +147,66 @@ Licenses:
 EOF
 }
 
-while getopts c:hil:sy: opt ; do
-  case "${opt}" in
-    c)
-      COPYRIGHT_HOLDER="${OPTARG}"
+while :; do
+  case "${1:-}" in
+    -c | --copyright)
+      if [ -n "${2:-}" ]; then
+        COPYRIGHT_HOLDER="${2}"
+        shift
+      else
+        echo "Error: -c / --copyright requires an argument." >&2
+      fi
       ;;
 
-    h)
+    -h | --help)
       show_help
       exit 0
       ;;
 
-    i)
+    -i | --in-place)
       MODIFY_FILE_INPLACE=1
       ;;
 
-    l)
-      LICENSE_NAME="${OPTARG}"
+    -l | --license)
+      if [ -n "${2:-}" ]; then
+        LICENSE_NAME="${2}"
+        shift
+      else
+        echo "Error: -l / --license requires an argument." >&2
+      fi
       ;;
 
-    s)
+    -s | --silent)
       SILENT=1
       ;;
 
-    y)
-      YEAR="${OPTARG}"
+    -y | --year)
+      if [ -n "${2:-}" ]; then
+        YEAR="${2}"
+        shift
+      else
+        echo "Error: -y / --year requires an argument." >&2
+      fi
+      ;;
+
+    --)
+      shift
+      break
+      ;;
+
+    -?*)
+      echo "Invalid flag: ${1}." >&2
+      show_help
+      exit 1
+      ;;
+
+    *)
+      # No more recognized options; switch to positional processing.
+      break
       ;;
   esac
+
+  shift
 done
 
 shift $((OPTIND - 1))
