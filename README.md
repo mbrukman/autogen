@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/mbrukman/autogen.svg?branch=master)](https://travis-ci.org/mbrukman/autogen)
 
-autogen
-=======
+# autogen
 
 Automatically generate boilerplate comments and code for new files with a single
 command.
@@ -32,14 +31,12 @@ Sample outputs:
 * [LGPL 2.1, C++](testdata/lgpl2.1-acme-cpp.out)
 * [MIT, Makefile](testdata/mit-acme-makefile.out)
 
-Editor support
---------------
+## Editor support
 
 For details on adding Autogen support to your editor, please see
 the [`editors`](editors) directory.
 
-Developing
-----------
+## Developing
 
 To add a few file type or feature, change [`autogen.sh`](autogen.sh) and add
 several files to the [`testdata`](testdata) directory, namely:
@@ -62,8 +59,7 @@ Be sure to also add an entry for it in [`tests/BUILD`](tests/BUILD) file for
 Bazel to be able to run it as well, including appropriate dependencies on any
 data files it may need.
 
-Testing
--------
+## Testing
 
 You have two options:
 
@@ -73,7 +69,6 @@ You have two options:
 Bazel is typically faster, especially when rerunning tests, due to built-in
 caching.
 
-License
--------
+## License
 
 Apache 2.0; see [LICENSE.txt](LICENSE.txt) for details.
