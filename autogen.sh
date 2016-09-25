@@ -114,10 +114,39 @@ function printFileCommentTemplate() {
   echo "$comment ${TODO_COMMENT}"
 }
 
-while getopts c:il:sy: opt ; do
+function show_help() {
+  cat << EOF
+Syntax: $0 [options] <filename>
+
+Options:
+  -c [copyright holder]    set copyright holder (default: "${COPYRIGHT_HOLDER}")
+  -h                       show this help text
+  -i                       modify the given file in-place
+  -l [license]             choose the license (default: "${LICENSE_NAME}")
+  -s                       silent: no error output for unknown file types
+  -y [year]                choose the year (default: ${YEAR})
+
+Licenses:
+  apache:       Apache 2.0
+  bsd2:         BSD, 2-clause, aka Simplified/FreeBSD
+  bsd3:         BSD, 3-clause, aka Revised/New/Modified
+  bsd4:         BSD, 4-clause, aka Original
+  gpl2:         GPL 2
+  gpl3:         GPL 3
+  lgpl2.1:      LGPL 2.1 (aliases: lgpl, lgpl2)
+  mit:          MIT
+EOF
+}
+
+while getopts c:hil:sy: opt ; do
   case "${opt}" in
     c)
       COPYRIGHT_HOLDER="${OPTARG}"
+      ;;
+
+    h)
+      show_help
+      exit 0
       ;;
 
     i)
@@ -172,26 +201,7 @@ case "${LICENSE_NAME}" in
 esac
 
 if [[ $# -eq 0 ]]; then
-  cat >&2 << EOF
-Syntax: $0 [options] <filename>
-
-Options:
-  -c [copyright holder]    set copyright holder (default: "${COPYRIGHT_HOLDER}")
-  -i                       modify the given file in-place
-  -l [license]             choose the license (default: "${LICENSE_NAME}")
-  -s                       silent: no error output for unknown file types
-  -y [year]                choose the year (default: ${YEAR})
-
-Licenses:
-  apache:       Apache 2.0
-  bsd2:         BSD, 2-clause, aka Simplified/FreeBSD
-  bsd3:         BSD, 3-clause, aka Revised/New/Modified
-  bsd4:         BSD, 4-clause, aka Original
-  gpl2:         GPL 2
-  gpl3:         GPL 3
-  lgpl2.1:      LGPL 2.1 (aliases: lgpl, lgpl2)
-  mit:          MIT
-EOF
+  show_help
   exit 1
 fi
 
