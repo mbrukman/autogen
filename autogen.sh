@@ -224,7 +224,7 @@ case "${FILE}" in
     printFileCommentTemplate "//"
     ;;
 
-  *.el | *.lisp)
+  *.el | .emacs | *.lisp)
     printLicenseNonHashComment ";;"
     printFileCommentTemplate ";;"
     ;;
