@@ -1,2 +1,6 @@
 # Bazel output/autogen/etc. directories.
 bazel-*
+
+# Ignore temporary editor backup files.
+*~         # Emacs
+*.swp      # Vim
