@@ -22,8 +22,8 @@ You generally only need to submit a CLA once, so if you've already submitted
 one (even if it was for a different project), you probably don't need to do it
 again.
 
-[individual CLA]: https://developers.google.com/open-source/cla/individual
-[corporate CLA]: https://developers.google.com/open-source/cla/corporate
+[individual CLA]: https://cla.developers.google.com/about/google-individual
+[corporate CLA]: https://cla.developers.google.com/about/google-corporate
 
 
 ## Submitting a patch ##
