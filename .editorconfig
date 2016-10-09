@@ -1,23 +1,15 @@
-# For more info on EditorConfig, see: http://EditorConfig.org
+# http://editorconfig.org
 
 root = true
 
-[*.md]
+[*]
+charset = utf-8
 indent_style = space
 indent_size = 2
+trim_trailing_whitespace = true
 
-[BUILD,*py]
-indent_style = space
+[BUILD,*.py]
 indent_size = 4
 
-[*.sh]
-indent_style = space
-indent_size = 2
-
-[*.yml,*.yaml]
-indent_style = space
-indent_size = 2
-
-[*.el,*.vim]
-indent_style = space
-indent_size = 2
+[Makefile]
+indent_style = tab
