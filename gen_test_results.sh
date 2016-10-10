@@ -27,7 +27,7 @@ function gen_test_data() {
 
     # Run tests in a hermetic environment such that they don't break every year.
     env YEAR=2014 \
-      bash -c "./autogen.sh $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
+      bash -c "./autogen $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
   done
 }
 

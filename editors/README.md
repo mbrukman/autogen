@@ -3,7 +3,7 @@
 For any of the integration methods below, be sure to modify the sample config
 to:
 
-* update the path to `autogen.sh` to match your local installation
+* update the path to `autogen` to match your local installation
 * add any other arguments, as necessary, to set the appropriate license,
   copyright holder, etc.
 

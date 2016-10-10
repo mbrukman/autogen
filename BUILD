@@ -17,6 +17,6 @@
 package(default_visibility = ["//visibility:public"])
 
 sh_binary(
-    name = "autogen",
-    srcs = ["autogen.sh"],
+    name = "autogen_tool",
+    srcs = ["autogen"],
 )

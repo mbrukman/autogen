@@ -50,7 +50,7 @@ function run_one_test() {
   local actual_err="$(mktemp "${TMPDIR}/${filebase}.err.XXXXXX")"
 
   # Run tests in a hermetic environment such that they don't break every year.
-  bash -c "${SRCDIR}/autogen.sh -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
+  bash -c "${SRCDIR}/autogen -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
 
   local -i stdout=1
   local -i stderr=1

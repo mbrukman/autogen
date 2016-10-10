@@ -26,7 +26,7 @@ sh_test(
     name = "data_test",
     srcs = ["data_test.sh"],
     data = [
-        "//:autogen",
+        "//:autogen_tool",
         "//licenses",
         "//testdata",
         ":test_util",
@@ -39,7 +39,7 @@ sh_test(
     name = "inplace_test",
     srcs = ["inplace_test.sh"],
     data = [
-        "//:autogen",
+        "//:autogen_tool",
         ":test_util",
     ],
     size = "small",
@@ -50,7 +50,7 @@ sh_test(
     name = "inplace_perm_test",
     srcs = ["inplace_perm_test.sh"],
     data = [
-        "//:autogen",
+        "//:autogen_tool",
         ":test_util",
     ],
     size = "small",
@@ -61,7 +61,7 @@ sh_test(
     name = "symlink_test",
     srcs = ["symlink_test.sh"],
     data = [
-        "//:autogen",
+        "//:autogen_tool",
         ":test_util",
     ],
     size = "small",

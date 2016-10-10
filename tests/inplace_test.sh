@@ -50,10 +50,10 @@ for ext in sh py rb hs; do
 
   # Generate the actual file and update it in-place.
   echo "${RANDOM_DATA}" > "${actual_file}"
-  "${SRCDIR}/autogen.sh" -i "${actual_file}"
+  "${SRCDIR}/autogen" -i "${actual_file}"
 
   # Generate the expected file using the usual means.
-  "${SRCDIR}/autogen.sh" "${expected_file}" > "${expected_file}"
+  "${SRCDIR}/autogen" "${expected_file}" > "${expected_file}"
   echo "${RANDOM_DATA}" >> "${expected_file}"
 
   # Compare the two files.

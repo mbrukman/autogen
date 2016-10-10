@@ -8,20 +8,20 @@ command.
 Usage:
 
 ```bash
-autogen.sh -c [copyright holder] -l [license] [filename]
+autogen -c [copyright holder] -l [license] [filename]
 ```
 
 Modify an existing file in-place:
 
 ```bash
-autogen.sh -i [...other params as above...]
+autogen -i [...other params as above...]
 ```
 
 To get a list of supported licenses, or to see the full set of flags, run
-`autogen.sh` with no parameters.
+`autogen` with no parameters.
 
 File type or language is determined based on the full filename or extension, as
-appropriate. See [`autogen.sh`](autogen.sh) for a list of recognized file types.
+appropriate. See [`autogen`](autogen) for a list of recognized file types.
 
 Sample outputs:
 
@@ -38,11 +38,11 @@ the [`editors`](editors) directory.
 
 ## Developing
 
-To add a new file type or feature, change [`autogen.sh`](autogen.sh) and add
+To add a new file type or feature, change [`autogen`](autogen) and add
 several files to the [`testdata`](testdata) directory, namely:
 
 * `testdata/<feature>.in` - the input file containing command-line args to pass
-  to `autogen.sh`
+  to `autogen`
 * `testdata/<feature>.out` - expected stdout for the test
 * `testdata/<feature>.err` - expected stderr for the test
 

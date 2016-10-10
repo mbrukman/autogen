@@ -20,13 +20,13 @@
   (let ((filename (buffer-file-name)))
     (with-output-to-string
       ; Note: modify path according to your installation of Autogen.
-      (call-process (concat default-directory "../autogen.sh")  ; program
-                    nil                                         ; infile
-                    (list standard-output nil)                  ; buffer
-                    nil                                         ; display
+      (call-process (concat default-directory "../autogen")  ; program
+                    nil                                      ; infile
+                    (list standard-output nil)               ; buffer
+                    nil                                      ; display
                     ; Add any other optional arguments here, e.g., to modify
                     ; license, copyright holder, etc.
-                    "-s"                                        ; silent
+                    "-s"                                     ; silent
                     filename))))
 
 (defun autogen ()
