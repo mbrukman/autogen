@@ -38,7 +38,7 @@ the [`editors`](editors) directory.
 
 ## Developing
 
-To add a few file type or feature, change [`autogen.sh`](autogen.sh) and add
+To add a new file type or feature, change [`autogen.sh`](autogen.sh) and add
 several files to the [`testdata`](testdata) directory, namely:
 
 * `testdata/<feature>.in` - the input file containing command-line args to pass
