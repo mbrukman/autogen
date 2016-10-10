@@ -23,8 +23,8 @@ sh_library(
 )
 
 sh_test(
-    name = "data_tests",
-    srcs = ["data_tests.sh"],
+    name = "data_test",
+    srcs = ["data_test.sh"],
     data = [
         "//:autogen",
         "//licenses",
@@ -36,8 +36,8 @@ sh_test(
 )
 
 sh_test(
-    name = "inplace_tests",
-    srcs = ["inplace_tests.sh"],
+    name = "inplace_test",
+    srcs = ["inplace_test.sh"],
     data = [
         "//:autogen",
         ":test_util",
@@ -47,8 +47,8 @@ sh_test(
 )
 
 sh_test(
-    name = "inplace_perm_tests",
-    srcs = ["inplace_perm_tests.sh"],
+    name = "inplace_perm_test",
+    srcs = ["inplace_perm_test.sh"],
     data = [
         "//:autogen",
         ":test_util",
@@ -58,8 +58,8 @@ sh_test(
 )
 
 sh_test(
-    name = "symlink_tests",
-    srcs = ["symlink_tests.sh"],
+    name = "symlink_test",
+    srcs = ["symlink_test.sh"],
     data = [
         "//:autogen",
         ":test_util",
