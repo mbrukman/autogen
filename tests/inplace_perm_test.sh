@@ -16,7 +16,7 @@
 #
 ################################################################################
 #
-# Test to ensure that permissions are kept after using `autogen.sh -i`.
+# Test to ensure that permissions are kept after using `autogen -i`.
 #
 ################################################################################
 
@@ -41,7 +41,7 @@ else
   trap cleanup EXIT INT TERM
 fi
 
-declare -r AUTOGEN="${SRCDIR}/autogen.sh"
+declare -r AUTOGEN="${SRCDIR}/autogen"
 
 # Pair-wise associated test cases of files and permissions.
 declare -ar FILES=(file.sh file.py)

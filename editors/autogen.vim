@@ -17,9 +17,9 @@
 " Generate boilerplate comments for new files.
 function! GenerateBoilerplate(filename)
   " Modify this line as needed for your installation:
-  " * specify the full path to autogen.sh
+  " * specify the full path to autogen
   " * add flags as needed to set license, copyright holder, etc.
-  let gen = system("../autogen.sh -s " . a:filename)
+  let gen = system("../autogen -s " . a:filename)
   call append(0, split(gen, '\v\n'))
 endfunction
 
