@@ -51,7 +51,7 @@ files and run `make regen`. Then, examine the resulting `*.out` and `*.err`
 files.
 
 Other custom tests can be added as separate scripts in the [`tests`](tests)
-directory. If the file has the suffix `_tests.sh`, it will be automatically
+directory. If the file has the suffix `_test.sh`, it will be automatically
 picked up by [`tests/run_all_tests.sh`](tests/run_all_tests.sh) script, which
 means that `make test` will automatically run it without any other changes.
 
