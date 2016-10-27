@@ -19,7 +19,7 @@ sh_library(
     srcs = [
         "test_util.sh",
     ],
-    testonly = 1
+    testonly = 1,
 )
 
 sh_test(
