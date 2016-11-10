@@ -103,14 +103,24 @@ w
 EOF
 }
 
+SEPARATE_LICENSE_FROM_TODO="blank"
 readonly TODO_COMMENT="TODO: High-level file comment."
 function printFileCommentTemplate() {
   local comment=$1
-  # Fit into 80 cols: repeat enough times, depending on our comment width.
-  local repeat=$(echo 80 / $(echo -n "${comment}" | wc -c) | bc)
-  echo $comment
-  perl -e "print \"$comment\" x $repeat . \"\n\""
-  echo $comment
+
+  case "${SEPARATE_LICENSE_FROM_TODO}" in
+    blank)
+      echo
+      ;;
+    *)
+      # Fit into 80 cols: repeat enough times, depending on our comment width.
+      local repeat=$(echo 80 / $(echo -n "${comment}" | wc -c) | bc)
+      echo $comment
+      perl -e "print \"$comment\" x $repeat . \"\n\""
+      echo $comment
+      ;;
+  esac
+
   echo "$comment ${TODO_COMMENT}"
 }
 
@@ -124,6 +134,8 @@ Options:
   --help                   show this help text
   --in-place               modify the given file in-place
   --license [license]      choose the license (default: "${LICENSE_NAME}")
+  --separator              print a line of comment characters to separate
+                           license from the top-level-comment
   --silent                 silent: no error output for unknown file types
   --year [year]            choose the year (default: ${YEAR})
 
@@ -178,6 +190,10 @@ while :; do
 
     -s | --silent)
       SILENT=1
+      ;;
+
+    --separator)
+      SEPARATE_LICENSE_FROM_TODO="comment"
       ;;
 
     -y | --year)
