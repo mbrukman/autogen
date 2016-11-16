@@ -15,7 +15,11 @@
 ################################################################################
 
 language: generic
-sudo: false
+
+# `sudo` is required only because `ed` is not yet a whitelisted package:
+# https://github.com/travis-ci/apt-package-whitelist/issues/3681
+# Once it is, we can drop this and switch to container-based builds.
+sudo: true
 
 addons:
   apt:
