@@ -37,33 +37,47 @@ matrix:
       dist: trusty
       env: TEST_RUNNER=bazel
 
-      # We cannot use the convenient JDK installation method
-      #     jdk: oraclejdk8
-      #
-      # because Bazel has explicit dependency on one of several JDK packages and
-      # fails with the following error:
-      #
-      #    The following packages have unmet dependencies:
-      #      bazel : Depends: google-jdk but it is not installable or
-      #                       java8-jdk but it is not installable or
-      #                       java8-sdk but it is not installable
-      #    E: Unable to correct problems, you have held broken packages.
-      #
-      # if we use this feature. Instead, we need to install the JDK ourselves.
-
-      # Also, we cannot use the APT addon because neither the repository nor the Bazel
+      # We cannot use the APT addon because neither the repository nor the Bazel
       # package are whitelisted. This means we must use `sudo` and hence cannot
       # run on the container-based infrastructure.
       sudo: required
 
+      # This is a necessary setting; without it, `oracle-java8-installer` does
+      # not install: https://travis-ci.org/mbrukman/autogen/jobs/178708337
+      language: java
+
+      # Using JDK switcher setting in addition to the `oracle-java8-installer`
+      # package below as follows:
+      #
+      #     jdk:
+      #       - oraclejdk8
+      #
+      # fails with:
+      #
+      #     $ jdk_switcher use ["oraclejdk8"]
+      #     Sorry, but JDK '[oraclejdk8]' is not known.
+      #     The command "jdk_switcher use ["oraclejdk8"]" failed and exited with 1 during .
+      #
+      # even though `oracle-java8-installer` installed successfully moments
+      # prior: https://travis-ci.org/mbrukman/autogen/jobs/178714227
+      #
+      # Using the same setting:
+      #
+      #     jdk:
+      #       - oraclejdk8
+      #
+      # without installing the `oracle-java8-installer` package produces the
+      # same error: https://travis-ci.org/mbrukman/autogen/jobs/178710299
+
+      addons:
+        apt:
+          packages:
+            - oracle-java8-installer
+
       before_script:
-        - sudo add-apt-repository -y ppa:webupd8team/java
-        - echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-        - echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
         - echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
         - curl "https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg" | sudo apt-key add -
         - sudo apt-get update
-        - sudo apt-get install -qq -y oracle-java8-installer
         - sudo apt-get install -qq -y bazel
       script:
         - bazel test //...
