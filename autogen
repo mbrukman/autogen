@@ -426,6 +426,13 @@ EOF
     printFileCommentTemplate "#"
     ;;
 
+  *.tcl)
+    echo "#!/usr/bin/tclsh"
+    echo "#"
+    printLicenseHashComment
+    printFileCommentTemplate "#"
+    ;;
+
   *.txt | README)
     printLicenseWithYear
     ;;
