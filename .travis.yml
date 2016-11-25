@@ -33,6 +33,7 @@ matrix:
       dist: trusty
       env: TEST_RUNNER=make VERBOSE=2
       script: make test
+
     - os: linux
       dist: trusty
       env: TEST_RUNNER=bazel
@@ -80,9 +81,15 @@ matrix:
 
       script:
         - bazel test //...
+
     - os: osx
       env: TEST_RUNNER=make VERBOSE=2
       script: make test
 
-# Note: we cannot test with Bazel on OS X at this time, because Travis only
-# supports 10.9 Mavericks while Bazel requires 10.10 Yosemite or higher.
+    - os: osx
+      env: TEST_RUNNER=bazel
+      before_install:
+        - brew update
+        - brew install bazel
+      script:
+        - bazel test //...
