@@ -84,10 +84,12 @@ matrix:
 
     - os: osx
       env: TEST_RUNNER=make VERBOSE=2
+      sudo: false
       script: make test
 
     - os: osx
       env: TEST_RUNNER=bazel
+      sudo: false
       before_install:
         - brew update
         - brew install bazel
