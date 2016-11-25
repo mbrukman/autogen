@@ -15,32 +15,44 @@
 ################################################################################
 
 language: generic
-
-# `sudo` is required only because `ed` is not yet a whitelisted package:
-# https://github.com/travis-ci/apt-package-whitelist/issues/3681
-# Once it is, we can drop this and switch to container-based builds.
-sudo: true
-
-addons:
-  apt:
-    packages:
-      - bc
-      - ed
+sudo: false
 
 matrix:
   include:
     - os: linux
       dist: trusty
       env: TEST_RUNNER=make VERBOSE=2
+
+      # `sudo` is required only because `ed` is not yet a whitelisted package:
+      # https://github.com/travis-ci/apt-package-whitelist/issues/3681
+      # Once it is, we can drop this and switch to container-based builds.
+      sudo: true
+
+      addons:
+        apt:
+          packages:
+            - bc
+            - ed
+
       script: make test
 
     - os: linux
       dist: trusty
       env: TEST_RUNNER=bazel
 
-      # We cannot use the APT addon because neither the repository nor the Bazel
-      # package are whitelisted. This means we must use `sudo` and hence cannot
-      # run on the container-based infrastructure.
+      # `sudo` is required because:
+      #
+      # * `ed` is not yet a whitelisted package:
+      #   https://github.com/travis-ci/apt-package-whitelist/issues/3681
+      #
+      # * Bazel source repo is not whitelisted:
+      #   https://github.com/travis-ci/apt-source-whitelist/issues/305
+      #
+      # * Bazel package is not whitelisted (requires whitelisting the source
+      #   repo first)
+      #
+      # Once all of these are resolved, we can switch this to `false` and
+      # utilize the more efficient container-based infrastructure.
       sudo: required
 
       # This is a necessary setting; without it, `oracle-java8-installer` does
@@ -76,6 +88,8 @@ matrix:
             - sourceline: "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8"
               key_url: "https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg"
           packages:
+            - bc
+            - ed
             - oracle-java8-installer
             - bazel
 
