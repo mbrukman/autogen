@@ -114,7 +114,7 @@ function printFileCommentTemplate() {
       ;;
     *)
       # Fit into 80 cols: repeat enough times, depending on our comment width.
-      local repeat=$(echo 80 / $(echo -n "${comment}" | wc -c) | bc)
+      local repeat=$(perl -e "use POSIX; print floor(80 / length('${comment}'));")
       echo $comment
       perl -e "print \"$comment\" x $repeat . \"\n\""
       echo $comment
