@@ -94,26 +94,17 @@ function printLicenseHashComment() {
 function prependToFileInPlace() {
   local -r file="${1}"
 
-  # Prepend stdin to the beginning of the file.
-  local -r header="$(mktemp /tmp/autogen-inplace.header.XXXXXX)"
-  trap "rm -f ${header}" EXIT
-  cat > "${header}"
+  local -r staging="$(mktemp /tmp/autogen-inplace.staging.XXXXXX)"
+  # In case we exit due to an error early, clean up.
+  # We also clean up explicitly below.
+  trap "rm -f ${staging}" EXIT
 
-  if which ed > /dev/null 2>&1; then
-    ed -s "${file}" << EOF
-0r !cat ${header}
-w
-q
-EOF
-  elif which ex > /dev/null 2>&1; then
-    ex -sc "0r !cat ${header}" -cx $1
-  else
-    local -r staging="$(mktemp /tmp/autogen-inplace.staging.XXXXXX)"
-    trap "rm -f ${staging}" EXIT
+  cat - "${file}" > "${staging}"
+  cat "${staging}" > "${file}"
 
-    cat "${header}" "${file}" > "${staging}"
-    cat "${staging}" > "${file}"
-  fi
+  # Future calls to `trap` overwrite previous ones, so make sure to delete our
+  # temporary file.
+  rm -f "${staging}"
 }
 
 SEPARATE_LICENSE_FROM_TODO="blank"
