@@ -27,41 +27,9 @@ matrix:
 
     - os: linux
       dist: trusty
-      env: TEST_RUNNER=make VERBOSE=2 EDITOR=ex
-
-      sudo: false
-
-      addons:
-        apt:
-          packages:
-            - vim  # provides `ex`; whitelisted package
-
-      script: make test
-
-    - os: linux
-      dist: trusty
-      env: TEST_RUNNER=make VERBOSE=2 EDITOR=ed
-
-      # `sudo` is required only because `ed` is not yet a whitelisted package:
-      # https://github.com/travis-ci/apt-package-whitelist/issues/3681
-      # Once it is, we can drop this and switch to container-based builds.
-      sudo: true
-
-      addons:
-        apt:
-          packages:
-            - ed
-
-      script: make test
-
-    - os: linux
-      dist: trusty
       env: TEST_RUNNER=bazel
 
       # `sudo` is required because:
-      #
-      # * `ed` is not yet a whitelisted package:
-      #   https://github.com/travis-ci/apt-package-whitelist/issues/3681
       #
       # * Bazel source repo is not whitelisted:
       #   https://github.com/travis-ci/apt-source-whitelist/issues/305
