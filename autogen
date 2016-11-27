@@ -94,13 +94,26 @@ function printLicenseHashComment() {
 function prependToFileInPlace() {
   local -r file="${1}"
 
-  # Prepend stdin to the beginning of the file using `ed`.
-  cat | ed -s "${file}" << EOF
-0a
-$(cat -)
-.
+  # Prepend stdin to the beginning of the file.
+  local -r header="$(mktemp /tmp/autogen-inplace.header.XXXXXX)"
+  trap "rm -f ${header}" EXIT
+  cat > "${header}"
+
+  if which ed > /dev/null 2>&1; then
+    ed -s "${file}" << EOF
+0r !cat ${header}
 w
+q
 EOF
+  elif which ex > /dev/null 2>&1; then
+    ex -sc "0r !cat ${header}" -cx $1
+  else
+    local -r staging="$(mktemp /tmp/autogen-inplace.staging.XXXXXX)"
+    trap "rm -f ${staging}" EXIT
+
+    cat "${header}" "${file}" > "${staging}"
+    cat "${staging}" > "${file}"
+  fi
 }
 
 SEPARATE_LICENSE_FROM_TODO="blank"
