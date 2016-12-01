@@ -443,11 +443,15 @@ EOF
 
   *.vim | .vimrc | vimrc)
     printLicenseNonHashComment \"
-    # Handle the file header locally; hard to pass a double-quote to function
-    # which wants to double-quote its arguments.
-    echo "\""
-    perl -e "print '\"' x 80 . \"\n\""
-    echo "\""
+    if [[ "${SEPARATE_LICENSE_FROM_TODO}" == "blank" ]]; then
+      echo
+    else
+      # Handle the file header locally; hard to pass a double-quote to function
+      # which wants to double-quote its arguments.
+      echo "\""
+      perl -e "print '\"' x 80 . \"\n\""
+      echo "\""
+    fi
     echo "\" ${TODO_COMMENT}"
     ;;
 
