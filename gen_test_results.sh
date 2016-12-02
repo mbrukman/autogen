@@ -21,7 +21,12 @@
 ################################################################################
 
 function gen_test_data() {
-  for input in testdata/*.in; do
+  local files="$@"
+  if [[ -z "${files}" ]]; then
+    files=testdata/*.in
+  fi
+
+  for input in ${files}; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
 
@@ -31,4 +36,4 @@ function gen_test_data() {
   done
 }
 
-gen_test_data
+gen_test_data "$@"
