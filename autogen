@@ -284,6 +284,7 @@ case "${FILE}" in
     echo "/*"
     printLicenseNonHashComment " *"
     echo " */"
+    echo
     echo "/* ${TODO_COMMENT} */"
     ;;
 
