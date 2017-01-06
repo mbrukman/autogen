@@ -133,23 +133,16 @@ function show_help() {
 Syntax: $0 [options] <filename>
 
 Options:
-  --copyright [copyright holder]
+  --copyright [copyright-holder], -c [copyright-holder]
                            set copyright holder (default: "${COPYRIGHT_HOLDER}")
-  --help                   show this help text
-  --in-place               modify the given file in-place
-  --license [license]      choose the license (default: "${LICENSE_NAME}")
+  --help, -h               show this help text
+  --in-place, -i           modify the given file in-place
+  --license [license], -l [license]
+                           choose the license (default: "${LICENSE_NAME}")
   --separator              print a line of comment characters to separate
                            license from the top-level-comment
-  --silent                 silent: no error output for unknown file types
-  --year [year]            choose the year (default: ${YEAR})
-
-Short-form aliases:
-  -c [copyright holder]    same as --copyright
-  -h                       same as --help
-  -i                       same as --in-place
-  -l [license]             same as --license
-  -s                       same as --silent
-  -y [year]                same as --year
+  --silent, -s             silent: no error output for unknown file types
+  --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
   apache:       Apache 2.0
