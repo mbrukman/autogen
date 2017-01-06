@@ -108,7 +108,9 @@ function prependToFileInPlace() {
 }
 
 SEPARATE_LICENSE_FROM_TODO="blank"
+TOP_LEVEL_COMMENT=1
 readonly TODO_COMMENT="TODO: High-level file comment."
+
 function printFileCommentTemplate() {
   local comment=$1
 
@@ -125,7 +127,9 @@ function printFileCommentTemplate() {
       ;;
   esac
 
-  echo "$comment ${TODO_COMMENT}"
+  if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+    echo "$comment ${TODO_COMMENT}"
+  fi
 }
 
 function show_help() {
@@ -135,16 +139,27 @@ Syntax: $0 [options] <filename>
 Options:
   --copyright [copyright-holder], -c [copyright-holder]
                            set copyright holder (default: "${COPYRIGHT_HOLDER}")
+
   --help, -h               show this help text
+
   --in-place, -i           modify the given file in-place (default: off, prints
                            output to stdout instead)
+
   --license [license], -l [license]
                            choose the license (default: "${LICENSE_NAME}")
+
   --separator              print a line of comment characters to separate
                            license from the top-level-comment (default: off,
                            prints a blank line instead)
+
   --silent, -s             silent: no error output for unknown file types; exits
                            with status code 0 (default: off)
+
+  --top-level-comment, --tlc
+  --no-top-level-comment, --no-tlc
+                           add a top-level documentation comment after the
+                           license header (default: enabled)
+
   --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
@@ -195,6 +210,14 @@ while :; do
 
     --separator)
       SEPARATE_LICENSE_FROM_TODO="comment"
+      ;;
+
+    --top-level-comment | --tlc)
+      TOP_LEVEL_COMMENT=1
+      ;;
+
+    --no-top-level-comment | --no-tlc)
+      TOP_LEVEL_COMMENT=0
       ;;
 
     -y | --year)
@@ -282,7 +305,9 @@ function autogenForFile() {
       printLicenseNonHashComment " *"
       echo " */"
       echo
-      echo "/* ${TODO_COMMENT} */"
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        echo "/* ${TODO_COMMENT} */"
+      fi
       ;;
 
     *.cc | *.cpp | *.cs | *.go | *.hh | *.hpp | *.java | *.js | *.m | *.mm | *.proto | *.rs | *.scala | *.swift)
@@ -325,7 +350,9 @@ function autogenForFile() {
       printLicenseNonHashComment " *"
       echo " *)"
       echo
-      echo "(* ${TODO_COMMENT} *)"
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        echo "(* ${TODO_COMMENT} *)"
+      fi
       ;;
 
     *.php)
@@ -358,10 +385,12 @@ function autogenForFile() {
       echo "#!/usr/bin/python"
       echo "#"
       printLicenseHashComment
-      cat <<EOF
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        cat <<EOF
 
 """${TODO_COMMENT}"""
 EOF
+      fi
       BASE_PY="${1/#test_/}"
       BASE_PY="${BASE_PY/_test/}"
       echo
@@ -395,9 +424,13 @@ EOF
       echo "#!/usr/bin/python"
       echo "#"
       printLicenseHashComment
-      cat <<EOF
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        cat <<EOF
 
 """${TODO_COMMENT}"""
+EOF
+      fi
+      cat <<EOF
 
 import sys
 
@@ -447,7 +480,9 @@ EOF
         perl -e "print '\"' x 80 . \"\n\""
         echo "\""
       fi
-      echo "\" ${TODO_COMMENT}"
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        echo "\" ${TODO_COMMENT}"
+      fi
       ;;
 
     *.yaml | *.yml)
