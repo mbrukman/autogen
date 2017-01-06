@@ -136,12 +136,15 @@ Options:
   --copyright [copyright-holder], -c [copyright-holder]
                            set copyright holder (default: "${COPYRIGHT_HOLDER}")
   --help, -h               show this help text
-  --in-place, -i           modify the given file in-place
+  --in-place, -i           modify the given file in-place (default: off, prints
+                           output to stdout instead)
   --license [license], -l [license]
                            choose the license (default: "${LICENSE_NAME}")
   --separator              print a line of comment characters to separate
-                           license from the top-level-comment
-  --silent, -s             silent: no error output for unknown file types
+                           license from the top-level-comment (default: off,
+                           prints a blank line instead)
+  --silent, -s             silent: no error output for unknown file types; exits
+                           with status code 0 (default: off)
   --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
