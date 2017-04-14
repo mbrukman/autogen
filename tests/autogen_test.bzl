@@ -12,32 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load(":autogen_test.bzl", "autogen_test")
-
-sh_library(
-    name = "test_util",
-    srcs = [
-        "test_util.sh",
-    ],
-    testonly = 1,
-)
-
-autogen_test(
-    name = "data",
-    data = [
-        "//licenses",
-        "//testdata",
-    ],
-)
-
-autogen_test(
-    name = "inplace",
-)
-
-autogen_test(
-    name = "inplace_perm",
-)
-
-autogen_test(
-    name = "symlink",
-)
+def autogen_test(name=None, srcs=[], data=[]):
+    native.sh_test(
+        name = name,
+        srcs = ["%s_test.sh" % name] + srcs,
+        data = [
+            "//:autogen_tool",
+            ":test_util",
+        ] + data,
+        size = "small",
+        timeout = "short",
+    )
