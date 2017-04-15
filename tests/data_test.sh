@@ -30,6 +30,8 @@ else
   declare -r SRCDIR="$(dirname $0)/.."
 fi
 
+declare -r TESTDATA="${SRCDIR}/tests/testdata"
+
 # Set temp directory from environment, if running under Bazel.
 declare -r TMPDIR="${TEST_TMPDIR:-${TEMPDIR:-${TMPDIR:-/tmp}}}"
 
@@ -96,13 +98,13 @@ function run_one_test() {
 }
 
 function run_all_tests() {
-  local -r num_files="$(ls -1 ${SRCDIR}/testdata/*.in | wc -l)"
+  local -r num_files="$(ls -1 ${TESTDATA}/*.in | wc -l)"
   if [[ ${num_files} -eq 0 ]]; then
-    echo "No files found in ${SRCDIR}/testdata; exiting." >&2
+    echo "No files found in ${TESTDATA}; exiting." >&2
     exit 1
   fi
 
-  for input in ${SRCDIR}/testdata/*.in; do
+  for input in ${TESTDATA}/*.in; do
     local expected_out="${input%.in}.out"
     local expected_err="${input%.in}.err"
     run_one_test "${input}" "${expected_out}" "${expected_err}" \

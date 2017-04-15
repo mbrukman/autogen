@@ -23,8 +23,19 @@
 # short- and long-form args or long-form args exclusively.
 #
 # That `autogen` actually produces the same output is checked by another test
-# which ensures this for all files in `../testdata/*`.
-declare -r BASE="../testdata/mit-acme-erl"
+# which ensures this for all files in `testdata/*`.
+
+# If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
+# otherwise, default to dir of current file and search relative to that.
+if [ -n "${TEST_SRCDIR:-}" ]; then
+  declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
+else
+  declare -r SRCDIR="$(dirname $0)/.."
+fi
+
+declare -r TESTDATA="${SRCDIR}/tests/testdata"
+
+declare -r BASE="${TESTDATA}/mit-acme-erl"
 for mode in 1 2 1_2 ; do
   for ext in out err ; do
     diff "${BASE}.${ext}" "${BASE}-longflag_${mode}.${ext}"
