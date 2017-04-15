@@ -26,7 +26,7 @@ autogen_test(
     name = "data",
     data = [
         "//licenses",
-        "//testdata",
+        ":testdata",
     ],
 )
 
@@ -36,6 +36,13 @@ autogen_test(
 
 autogen_test(
     name = "inplace_perm",
+)
+
+autogen_test(
+    name = "longflags",
+    data = [
+        ":testdata",
+    ],
 )
 
 autogen_test(

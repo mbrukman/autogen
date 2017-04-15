@@ -39,12 +39,12 @@ the [`editors`](editors) directory.
 ## Developing
 
 To add a new file type or feature, change [`autogen`](autogen) and add
-several files to the [`testdata`](testdata) directory, namely:
+several files to the [`tests/testdata`](tests/testdata) directory, namely:
 
-* `testdata/<feature>.in` - the input file containing command-line args to pass
+* `<feature>.in` - the input file containing command-line args to pass
   to `autogen`
-* `testdata/<feature>.out` - expected stdout for the test
-* `testdata/<feature>.err` - expected stderr for the test
+* `<feature>.out` - expected stdout for the test
+* `<feature>.err` - expected stderr for the test
 
 To generate the `*.out` and `*.err` files automatically, just add the `*.in`
 files and run `make regen`. Then, examine the resulting `*.out` and `*.err`
