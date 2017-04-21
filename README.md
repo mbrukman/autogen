@@ -25,11 +25,11 @@ appropriate. See [`autogen`](autogen) for a list of recognized file types.
 
 Sample outputs:
 
-* [Apache 2.0, Haskell](testdata/apache-acme-hs.out)
-* [3-clause BSD, Erlang](testdata/bsd3-acme-erl.out)
-* [GPL 2, Ruby](testdata/gpl2-acme-rb.out)
-* [LGPL 2.1, C++](testdata/lgpl2.1-acme-cpp.out)
-* [MIT, Makefile](testdata/mit-acme-makefile.out)
+* [Apache 2.0, Haskell](tests/testdata/apache-acme-hs.out)
+* [3-clause BSD, Erlang](tests/testdata/bsd3-acme-erl.out)
+* [GPL 2, Ruby](tests/testdata/gpl2-acme-rb.out)
+* [LGPL 2.1, C++](tests/testdata/lgpl2.1-acme-cpp.out)
+* [MIT, Makefile](tests/testdata/mit-acme-makefile.out)
 
 ## Editor support
 
