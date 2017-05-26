@@ -23,7 +23,7 @@
 function gen_test_data() {
   local files="$@"
   if [[ -z "${files}" ]]; then
-    files=testdata/*.in
+    files=tests/testdata/*.in
   fi
 
   for input in ${files}; do
