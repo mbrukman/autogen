@@ -23,7 +23,9 @@ matrix:
       dist: trusty
       env: TEST_RUNNER=make VERBOSE=2
       sudo: false
-      script: make test
+      script:
+        - make test
+        - make regen-test
 
     - os: linux
       dist: trusty
@@ -83,7 +85,9 @@ matrix:
     - os: osx
       env: TEST_RUNNER=make VERBOSE=2
       sudo: false
-      script: make test
+      script:
+        - make test
+        - make regen-test
 
     - os: osx
       env: TEST_RUNNER=bazel
