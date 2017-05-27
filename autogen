@@ -148,7 +148,7 @@ Options:
   --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
-  apache:       Apache 2.0
+  apache2:      Apache 2.0 (alias: apache)
   bsd2:         BSD, 2-clause, aka Simplified/FreeBSD
   bsd3:         BSD, 3-clause, aka Revised/New/Modified
   bsd4:         BSD, 4-clause, aka Original
@@ -230,31 +230,31 @@ shift $((OPTIND - 1))
 
 # Compute license file path given the license name.
 case "${LICENSE_NAME}" in
-  apache)
+  apache | apache2 | apache-2 | apache2.0 | apache-2.0)
     LICENSE_FILE="${SRCDIR}/licenses/apache-2.0.txt"
     ;;
-  bsd2|bsd-2)
+  bsd2 | bsd-2)
     LICENSE_FILE="${SRCDIR}/licenses/bsd-2-clause.txt"
     ;;
-  bsd3|bsd-3)
+  bsd3 | bsd-3)
     LICENSE_FILE="${SRCDIR}/licenses/bsd-3-clause.txt"
     ;;
-  bsd4|bsd-4)
+  bsd4 | bsd-4)
     LICENSE_FILE="${SRCDIR}/licenses/bsd-4-clause.txt"
     ;;
-  gpl2|gpl-2)
+  gpl2 | gpl-2)
     LICENSE_FILE="${SRCDIR}/licenses/gpl-2.txt"
     ;;
-  gpl3|gpl-3)
+  gpl3 | gpl-3)
     LICENSE_FILE="${SRCDIR}/licenses/gpl-3.txt"
     ;;
-  lgpl|lgpl2|lgpl-2|lgpl2.1|lgpl-2.1)
+  lgpl | lgpl2 | lgpl-2 | lgpl2.1 | lgpl-2.1)
     LICENSE_FILE="${SRCDIR}/licenses/lgpl-2.1.txt"
     ;;
   mit)
     LICENSE_FILE="${SRCDIR}/licenses/mit.txt"
     ;;
-  mpl|mpl2|mpl-2|mpl2.0|mpl-2.0)
+  mpl | mpl2 | mpl-2 | mpl2.0 | mpl-2.0)
     LICENSE_FILE="${SRCDIR}/licenses/mpl-2.0.txt"
     ;;
   *)
