@@ -129,6 +129,7 @@ function printFileCommentTemplate() {
 
   if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
     echo "$comment ${TODO_COMMENT}"
+    echo
   fi
 }
 
@@ -307,6 +308,7 @@ function autogenForFile() {
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         echo "/* ${TODO_COMMENT} */"
+        echo
       fi
       ;;
 
@@ -352,6 +354,7 @@ function autogenForFile() {
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         echo "(* ${TODO_COMMENT} *)"
+        echo
       fi
       ;;
 
@@ -482,6 +485,7 @@ EOF
       fi
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         echo "\" ${TODO_COMMENT}"
+        echo
       fi
       ;;
 
