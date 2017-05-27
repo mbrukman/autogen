@@ -385,15 +385,15 @@ function autogenForFile() {
       echo "#!/usr/bin/python"
       echo "#"
       printLicenseHashComment
+      echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         cat <<EOF
-
 """${TODO_COMMENT}"""
+
 EOF
       fi
       BASE_PY="${1/#test_/}"
       BASE_PY="${BASE_PY/_test/}"
-      echo
       echo "import unittest"
       # Maybe import the package that this is intended to test.
       if [ -e "${BASE_PY}" ]; then
@@ -424,14 +424,14 @@ EOF
       echo "#!/usr/bin/python"
       echo "#"
       printLicenseHashComment
+      echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         cat <<EOF
-
 """${TODO_COMMENT}"""
+
 EOF
       fi
       cat <<EOF
-
 import sys
 
 
