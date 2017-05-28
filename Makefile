@@ -13,6 +13,9 @@
 # limitations under the License.
 
 VERB = @
+ifeq ($(VERBOSE),1)
+	VERB =
+endif
 
 .PHONY default:
 	$(VERB) echo "Available actions: test, regen"
