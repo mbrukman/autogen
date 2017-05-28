@@ -21,7 +21,7 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env: TEST_RUNNER=make VERBOSE=2
+      env: TEST_RUNNER=make VERBOSE=1
       sudo: false
       script:
         - make test
@@ -83,7 +83,7 @@ matrix:
         - bazel test //...
 
     - os: osx
-      env: TEST_RUNNER=make VERBOSE=2
+      env: TEST_RUNNER=make VERBOSE=1
       sudo: false
       script:
         - make test
