@@ -30,6 +30,22 @@ Modify an existing file in-place:
 autogen -i [...other params as above...]
 ```
 
+Bulk update many existing files in-place:
+
+```bash
+find . -type f -name \*.sh -exec autogen -i --no-top-level-comment [options...] {} \;
+```
+
+The flag `--no-top-level-comment` avoids adding a comment such as:
+
+```css
+/* TODO: High-level file comment */
+```
+
+because either some or all of the files have such a top-level comment, or if
+they don't, you probably wouldn't want to have to manually add or delete at this
+time, if you're just trying to add the license header in bulk.
+
 To get a list of supported licenses, or to see the full set of flags, run
 `autogen` with no parameters.
 
