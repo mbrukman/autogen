@@ -6,7 +6,8 @@ Automatically generate boilerplate comments and code for new files with a single
 command.
 
 ## Install
-```sh
+
+```bash
 cd ~/bin
 git clone git@github.com:mbrukman/autogen.git
 echo 'alias autogen=~/bin/autogen/autogen' >> ~/.bash_profile
