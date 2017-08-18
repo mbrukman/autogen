@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/mbrukman/autogen.svg?branch=master)](https://travis-ci.org/mbrukman/autogen)
-
 # autogen
+
+[![Build Status](https://travis-ci.org/mbrukman/autogen.svg?branch=master)](https://travis-ci.org/mbrukman/autogen)
 
 Automatically generate boilerplate comments and code for new files with a single
 command.
