@@ -161,6 +161,11 @@ Options:
                            add a top-level documentation comment after the
                            license header (default: enabled)
 
+  --no-pycode, --no-pyc
+                           Skip adding extra python bootstrap code
+                           to the python files (default: false)
+
+
   --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
@@ -220,6 +225,11 @@ while :; do
     --no-top-level-comment | --no-tlc)
       TOP_LEVEL_COMMENT=0
       ;;
+
+    --no-pycode | --no-pyc)
+      ADD_PYTHON_CODE=0
+      ;;
+
 
     -y | --year)
       if [ -n "${2:-}" ]; then
@@ -385,8 +395,12 @@ function autogenForFile() {
       ;;
 
     test_*.py | *_test.py)
-      echo "#!/usr/bin/python"
-      echo "#"
+
+
+      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+        echo "#!/usr/bin/python"
+        echo "#"
+      fi
       printLicenseHashComment
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
@@ -395,15 +409,16 @@ function autogenForFile() {
 
 EOF
       fi
-      BASE_PY="${1/#test_/}"
-      BASE_PY="${BASE_PY/_test/}"
-      echo "import unittest"
-      # Maybe import the package that this is intended to test.
-      if [ -e "${BASE_PY}" ]; then
-        echo "import ${BASE_PY/%.py/}"
-      fi
-      # Add basic bootstrap code.
-      cat <<EOF
+      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+        BASE_PY="${1/#test_/}"
+        BASE_PY="${BASE_PY/_test/}"
+        echo "import unittest"
+        # Maybe import the package that this is intended to test.
+        if [ -e "${BASE_PY}" ]; then
+          echo "import ${BASE_PY/%.py/}"
+        fi
+        # Add basic bootstrap code.
+        cat <<EOF
 
 
 class FooTest(unittest.TestCase):
@@ -421,11 +436,14 @@ class FooTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 EOF
+      fi
       ;;
 
     *.py)
-      echo "#!/usr/bin/python"
-      echo "#"
+      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+        echo "#!/usr/bin/python"
+        echo "#"
+      fi
       printLicenseHashComment
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
@@ -434,6 +452,8 @@ EOF
 
 EOF
       fi
+      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+
       cat <<EOF
 import sys
 
@@ -445,6 +465,7 @@ def main(argv):
 if __name__ == '__main__':
     main(sys.argv)
 EOF
+      fi
       ;;
 
     *.rb)

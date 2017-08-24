@@ -53,6 +53,10 @@ To get a list of supported licenses, or to see the full set of flags, run
 File type or language is determined based on the full filename or extension, as
 appropriate. See [`autogen`](autogen) for a list of recognized file types.
 
+The flag `--no-pycode` skips adding extra python boilerplate code to
+python test and python source files:
+
+
 Sample outputs:
 
 * [Apache 2.0, Haskell](tests/testdata/apache-acme-hs.out)
