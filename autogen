@@ -72,7 +72,8 @@ COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
 MODIFY_FILE_INPLACE=0
 SILENT=0
-
+ADD_CODE=1
+ADD_RUNLINE=1
 function printLicenseWithYear() {
   cat "${LICENSE_FILE}" \
     | sed "s/%YEAR%/${YEAR}/" \
@@ -161,10 +162,12 @@ Options:
                            add a top-level documentation comment after the
                            license header (default: enabled)
 
-  --no-pycode, --no-pyc
-                           Skip adding extra python bootstrap code
-                           to the python files (default: false)
-
+  --no-runline, --no-rnl
+                           Skip adding runline code
+                           to the source files (default: false)
+  --no-code, --no-cod
+                           Skip adding extra bootstrap code
+                           to the source files (default: false)
 
   --year [year], -y [year] choose the year (default: ${YEAR})
 
@@ -226,10 +229,13 @@ while :; do
       TOP_LEVEL_COMMENT=0
       ;;
 
-    --no-pycode | --no-pyc)
-      ADD_PYTHON_CODE=0
+    --no-code | --no-cod)
+      ADD_CODE=0
       ;;
 
+    --no-runline | --no-rnl)
+      ADD_RUNLINE=0
+      ;;
 
     -y | --year)
       if [ -n "${2:-}" ]; then
@@ -397,7 +403,7 @@ function autogenForFile() {
     test_*.py | *_test.py)
 
 
-      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
         echo "#!/usr/bin/python"
         echo "#"
       fi
@@ -409,7 +415,7 @@ function autogenForFile() {
 
 EOF
       fi
-      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+      if [ ${ADD_CODE} -eq 1 ]; then
         BASE_PY="${1/#test_/}"
         BASE_PY="${BASE_PY/_test/}"
         echo "import unittest"
@@ -440,7 +446,7 @@ EOF
       ;;
 
     *.py)
-      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
         echo "#!/usr/bin/python"
         echo "#"
       fi
@@ -452,7 +458,7 @@ EOF
 
 EOF
       fi
-      if [ ${ADD_PYTHON_CODE} -eq 1 ]; then
+      if [ ${ADD_CODE} -eq 1 ]; then
 
       cat <<EOF
 import sys
