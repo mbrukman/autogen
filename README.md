@@ -57,7 +57,6 @@ The flag `--no-code` skips adding extra boilerplate code to source files.
 
 The flag `--no-runline` skips adding extra runline to source files.
 
-
 Sample outputs:
 
 * [Apache 2.0, Haskell](tests/testdata/apache-acme-hs.out)
