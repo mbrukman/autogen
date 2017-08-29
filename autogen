@@ -162,11 +162,10 @@ Options:
                            add a top-level documentation comment after the
                            license header (default: enabled)
 
-  --no-runline
-                           Skip adding runline code
+  --no-runline             Skip adding runline code
                            to the source files (default: false)
-  --no-code
-                           Skip adding extra bootstrap code
+  
+  --no-code                Skip adding extra bootstrap code
                            to the source files (default: false)
 
   --year [year], -y [year] choose the year (default: ${YEAR})
