@@ -405,8 +405,6 @@ function autogenForFile() {
       ;;
 
     test_*.py | *_test.py)
-
-
       if [ ${ADD_RUNLINE} -eq 1 ]; then
         echo "#!/usr/bin/python"
         echo "#"
