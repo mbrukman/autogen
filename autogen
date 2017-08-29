@@ -164,7 +164,7 @@ Options:
 
   --no-runline             Skip adding runline code
                            to the source files (default: false)
-  
+
   --no-code                Skip adding extra bootstrap code
                            to the source files (default: false)
 
@@ -388,7 +388,6 @@ function autogenForFile() {
       # E_STRICT was added in PHP 5.0 and became included in E_ALL in PHP 6.0 .
       echo "error_reporting(E_ALL | E_STRICT);"
       echo "?>"
-      fi
       ;;
 
     *.pl)
