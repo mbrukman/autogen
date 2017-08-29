@@ -162,10 +162,10 @@ Options:
                            add a top-level documentation comment after the
                            license header (default: enabled)
 
-  --no-runline, --no-rnl
+  --no-runline
                            Skip adding runline code
                            to the source files (default: false)
-  --no-code, --no-cod
+  --no-code
                            Skip adding extra bootstrap code
                            to the source files (default: false)
 
@@ -229,11 +229,11 @@ while :; do
       TOP_LEVEL_COMMENT=0
       ;;
 
-    --no-code | --no-cod)
+    --no-code)
       ADD_CODE=0
       ;;
 
-    --no-runline | --no-rnl)
+    --no-runline)
       ADD_RUNLINE=0
       ;;
 
@@ -382,22 +382,30 @@ function autogenForFile() {
       # "php script.php" .
       #
       # Note: PHP accepts C, C++, and shell-style comments.
-      echo "<?php"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+       echo "<?php"
+      fi
       printLicenseNonHashComment "//"
       printFileCommentTemplate "//"
-      echo
-      # E_STRICT was added in PHP 5.0 and became included in E_ALL in PHP 6.0 .
-      echo "error_reporting(E_ALL | E_STRICT);"
-      echo "?>"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo
+        # E_STRICT was added in PHP 5.0 and became included in E_ALL in PHP 6.0 .
+        echo "error_reporting(E_ALL | E_STRICT);"
+        echo "?>"
+      fi
       ;;
 
     *.pl)
-      echo "#!/usr/bin/perl"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/perl"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
-      echo
-      echo "use strict;"
+      if [ ${ADD_CODE} -eq 1 ]; then
+        echo
+        echo "use strict;"
+      fi
       ;;
 
     test_*.py | *_test.py)
@@ -475,22 +483,28 @@ EOF
       ;;
 
     *.rb)
-      echo "#!/usr/bin/ruby"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/ruby"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
 
     *.sh)
-      echo "#!/bin/bash -eu"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/bin/bash -eu"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
 
     *.tcl)
-      echo "#!/usr/bin/tclsh"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/tclsh"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
