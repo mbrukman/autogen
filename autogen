@@ -397,8 +397,8 @@ function autogenForFile() {
       fi
       printLicenseHashComment
       printFileCommentTemplate "#"
+      echo
       if [ ${ADD_CODE} -eq 1 ]; then
-        echo
         echo "use strict;"
       fi
       ;;
@@ -460,7 +460,6 @@ EOF
 EOF
       fi
       if [ ${ADD_CODE} -eq 1 ]; then
-
       cat <<EOF
 import sys
 
