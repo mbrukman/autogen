@@ -425,7 +425,7 @@ EOF
           echo "import ${BASE_PY/%.py/}"
         fi
         # Add basic bootstrap code.
-        cat <<EOF
+      cat <<EOF
 
 
 class FooTest(unittest.TestCase):
