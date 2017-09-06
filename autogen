@@ -72,7 +72,8 @@ COPYRIGHT_HOLDER="Google Inc."
 YEAR="${YEAR:-$(date +%Y)}"
 MODIFY_FILE_INPLACE=0
 SILENT=0
-
+ADD_CODE=1
+ADD_RUNLINE=1
 function printLicenseWithYear() {
   cat "${LICENSE_FILE}" \
     | sed "s/%YEAR%/${YEAR}/" \
@@ -161,6 +162,12 @@ Options:
                            add a top-level documentation comment after the
                            license header (default: enabled)
 
+  --no-runline             Skip adding runline code
+                           to the source files (default: false)
+
+  --no-code                Skip adding bootstrap code
+                           to the source files (default: false)
+
   --year [year], -y [year] choose the year (default: ${YEAR})
 
 Licenses:
@@ -219,6 +226,14 @@ while :; do
 
     --no-top-level-comment | --no-tlc)
       TOP_LEVEL_COMMENT=0
+      ;;
+
+    --no-code)
+      ADD_CODE=0
+      ;;
+
+    --no-runline)
+      ADD_RUNLINE=0
       ;;
 
     -y | --year)
@@ -376,17 +391,23 @@ function autogenForFile() {
       ;;
 
     *.pl)
-      echo "#!/usr/bin/perl"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/perl"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       echo
-      echo "use strict;"
+      if [ ${ADD_CODE} -eq 1 ]; then
+        echo "use strict;"
+      fi
       ;;
 
     test_*.py | *_test.py)
-      echo "#!/usr/bin/python"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/python"
+        echo "#"
+      fi
       printLicenseHashComment
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
@@ -395,14 +416,15 @@ function autogenForFile() {
 
 EOF
       fi
-      BASE_PY="${1/#test_/}"
-      BASE_PY="${BASE_PY/_test/}"
-      echo "import unittest"
-      # Maybe import the package that this is intended to test.
-      if [ -e "${BASE_PY}" ]; then
-        echo "import ${BASE_PY/%.py/}"
-      fi
-      # Add basic bootstrap code.
+      if [ ${ADD_CODE} -eq 1 ]; then
+        BASE_PY="${1/#test_/}"
+        BASE_PY="${BASE_PY/_test/}"
+        echo "import unittest"
+        # Maybe import the package that this is intended to test.
+        if [ -e "${BASE_PY}" ]; then
+          echo "import ${BASE_PY/%.py/}"
+        fi
+        # Add basic bootstrap code.
       cat <<EOF
 
 
@@ -421,11 +443,14 @@ class FooTest(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 EOF
+      fi
       ;;
 
     *.py)
-      echo "#!/usr/bin/python"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/python"
+        echo "#"
+      fi
       printLicenseHashComment
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
@@ -434,6 +459,7 @@ EOF
 
 EOF
       fi
+      if [ ${ADD_CODE} -eq 1 ]; then
       cat <<EOF
 import sys
 
@@ -445,25 +471,32 @@ def main(argv):
 if __name__ == '__main__':
     main(sys.argv)
 EOF
+      fi
       ;;
 
     *.rb)
-      echo "#!/usr/bin/ruby"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/ruby"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
 
     *.sh)
-      echo "#!/bin/bash -eu"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/bin/bash -eu"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
 
     *.tcl)
-      echo "#!/usr/bin/tclsh"
-      echo "#"
+      if [ ${ADD_RUNLINE} -eq 1 ]; then
+        echo "#!/usr/bin/tclsh"
+        echo "#"
+      fi
       printLicenseHashComment
       printFileCommentTemplate "#"
       ;;
