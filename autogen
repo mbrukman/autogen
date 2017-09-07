@@ -397,8 +397,8 @@ function autogenForFile() {
       fi
       printLicenseHashComment
       printFileCommentTemplate "#"
-      echo
       if [ ${ADD_CODE} -eq 1 ]; then
+        echo
         echo "use strict;"
       fi
       ;;
@@ -425,7 +425,7 @@ EOF
           echo "import ${BASE_PY/%.py/}"
         fi
         # Add basic bootstrap code.
-      cat <<EOF
+        cat <<EOF
 
 
 class FooTest(unittest.TestCase):
@@ -460,7 +460,7 @@ EOF
 EOF
       fi
       if [ ${ADD_CODE} -eq 1 ]; then
-      cat <<EOF
+        cat <<EOF
 import sys
 
 
