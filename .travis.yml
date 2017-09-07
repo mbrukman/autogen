@@ -97,3 +97,8 @@ matrix:
         - brew install bazel
       script:
         - bazel test //...
+
+  allow_failures:
+    - os: osx
+
+  fast_finish: true
