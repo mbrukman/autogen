@@ -17,6 +17,10 @@
 language: generic
 sudo: false
 
+branches:
+  only:
+    - master
+
 matrix:
   include:
     - os: linux
