@@ -316,7 +316,7 @@ function autogenForFile() {
 
     # TODO(mbrukman): in some projects, *.h are actually C++ files where users
     # want to use C++ style "//" comments. How can we handle this flexibility?
-    *.c | *.h | *.css)
+    *.c | *.h | *.css | *.scss)
       echo "/*"
       printLicenseNonHashComment " *"
       echo " */"
@@ -327,7 +327,7 @@ function autogenForFile() {
       fi
       ;;
 
-    *.cc | *.cpp | *.cs | *.go | *.hh | *.hpp | *.java | *.js | *.m | *.mm | *.proto | *.rs | *.scala | *.swift)
+    *.cc | *.cpp | *.cs | *.go | *.hh | *.hpp | *.java | *.js | *.ts | *.m | *.mm | *.proto | *.rs | *.scala | *.swift)
       printLicenseNonHashComment "//"
       printFileCommentTemplate "//"
       ;;
