@@ -314,6 +314,15 @@ function autogenForFile() {
   local file="$1"
   case "${file}" in
 
+    *.bat)
+      printLicenseNonHashComment "rem "
+      echo
+      if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
+        echo "rem ${TODO_COMMENT}"
+        echo
+      fi
+      ;;
+
     # TODO(mbrukman): in some projects, *.h are actually C++ files where users
     # want to use C++ style "//" comments. How can we handle this flexibility?
     *.c | *.h | *.css | *.scss)
