@@ -474,6 +474,10 @@ EOF
       fi
       ;;
 
+    *.ipynb)
+      printLicenseHashComment | $(dirname $0)/ipynb.py
+      ;;
+
     *.rb)
       if [ ${ADD_RUNLINE} -eq 1 ]; then
         echo "#!/usr/bin/ruby"
