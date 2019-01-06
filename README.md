@@ -98,6 +98,10 @@ You have two options:
 Bazel is typically faster, especially when rerunning tests, due to built-in
 caching.
 
+## Related work
+
+* [addlicense](https://github.com/google/addlicense)
+
 ## License
 
 Apache 2.0; see [LICENSE.txt](LICENSE.txt) for details.
