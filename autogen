@@ -510,6 +510,11 @@ EOF
       printFileCommentTemplate "#"
       ;;
 
+    *.tf | *.tfvars)
+      printLicenseHashComment
+      printFileCommentTemplate "#"
+      ;;
+
     *.txt | README)
       printLicenseWithYear
       ;;
