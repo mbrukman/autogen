@@ -94,6 +94,11 @@ matrix:
         - make regen-test
 
     - os: osx
+      # We need JDK 1.8 because that's what Bazel installer in Homebrew
+      # currently requires, and the default version of Xcode installs JDK 10.x
+      # which does not satisfy the dependency requirement.
+      osx_image: xcode9.3
+      language: java
       env: TEST_RUNNER=bazel
       sudo: false
       before_install:
