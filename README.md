@@ -101,6 +101,7 @@ caching.
 ## Related work
 
 * [addlicense](https://github.com/google/addlicense)
+* [License Up](https://github.com/nikitavoloboev/license-up)
 
 ## License
 
