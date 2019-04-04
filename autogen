@@ -336,7 +336,7 @@ function autogenForFile() {
       fi
       ;;
 
-    *.cc | *.cpp | *.cs | *.go | *.hh | *.hpp | *.java | *.js | *.jsx | *.ts | *.tsx | *.m | *.mm | *.proto | *.rs | *.scala | *.swift)
+    *.cc | *.cpp | *.cs | *.dart | *.go | *.hh | *.hpp | *.java | *.js | *.jsx | *.ts | *.tsx | *.m | *.mm | *.proto | *.rs | *.scala | *.swift)
       printLicenseNonHashComment "//"
       printFileCommentTemplate "//"
       ;;
