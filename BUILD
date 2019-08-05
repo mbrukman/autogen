@@ -19,4 +19,7 @@ package(default_visibility = ["//visibility:public"])
 sh_binary(
     name = "autogen_tool",
     srcs = ["autogen"],
+    data = [
+        "ipynb.py",
+    ],
 )
