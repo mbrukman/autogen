@@ -25,6 +25,8 @@ set -eu
 
 source "$(dirname $0)/test_util.sh"
 
+readonly AUTOGEN="${1:-autogen}"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 #
@@ -51,10 +53,10 @@ for ext in sh py rb hs ; do
 
     # Generate the actual file and update it in-place.
     echo "${RANDOM_DATA}" > "${actual_file}"
-    "${SRCDIR}/autogen" "${in_place}" "${actual_file}"
+    "${SRCDIR}/${AUTOGEN}" "${in_place}" "${actual_file}"
 
     # Generate the expected file using the usual means.
-    "${SRCDIR}/autogen" "${expected_file}" > "${expected_file}"
+    "${SRCDIR}/${AUTOGEN}" "${expected_file}" > "${expected_file}"
     echo "${RANDOM_DATA}" >> "${expected_file}"
 
     # Compare the two files.

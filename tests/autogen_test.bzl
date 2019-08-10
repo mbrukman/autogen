@@ -17,9 +17,10 @@ def autogen_test(name=None, srcs=[], data=[]):
         name = name,
         srcs = ["%s_test.sh" % name] + srcs,
         data = [
-            "//:autogen_tool",
+            "//:autogen_sh",
             ":test_util",
         ] + data,
+        args = ["autogen.sh"],
         size = "small",
         timeout = "short",
     )

@@ -22,6 +22,8 @@
 
 source "$(dirname $0)/test_util.sh"
 
+readonly AUTOGEN="${1:-autogen}"
+
 # If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 if [ -n "${TEST_SRCDIR:-}" ]; then
@@ -52,7 +54,7 @@ function run_one_test() {
   local actual_err="$(mktemp "${TMPDIR}/${filebase}.err.XXXXXX")"
 
   # Run tests in a hermetic environment such that they don't break every year.
-  bash -c "${SRCDIR}/autogen -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
+  bash -c "${SRCDIR}/${AUTOGEN} -y 2014 $(cat "${input}")" > "${actual_out}" 2> "${actual_err}"
 
   local -i stdout=1
   local -i stderr=1

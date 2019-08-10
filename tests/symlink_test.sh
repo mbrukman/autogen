@@ -37,7 +37,7 @@ else
   trap cleanup EXIT INT TERM
 fi
 
-declare -r AUTOGEN="${SRCDIR}/autogen"
+declare -r AUTOGEN="${SRCDIR}/${1:-autogen}"
 
 # We need to get the absolute path to $AUTOGEN because otherwise, relative paths
 # from absolute paths in $TMPDIR will not work.
