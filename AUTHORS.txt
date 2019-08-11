@@ -8,4 +8,4 @@
 #
 # See python fnmatch module documentation for more information.
 
-Google Inc. <*@google.com>
+Google LLC <*@google.com>
