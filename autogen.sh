@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 #
-# Copyright 2009 Google Inc.
+# Copyright 2009 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ fi
 # Path to license file will be computed from LICENSE_NAME below.
 LICENSE_NAME="apache"
 LICENSE_FILE=""
-COPYRIGHT_HOLDER="Google Inc."
+COPYRIGHT_HOLDER="Google LLC"
 YEAR="${YEAR:-$(date +%Y)}"
 MODIFY_FILE_INPLACE=0
 SILENT=0
