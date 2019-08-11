@@ -41,7 +41,7 @@ else
   trap cleanup EXIT INT TERM
 fi
 
-declare -r AUTOGEN="${SRCDIR}/autogen"
+declare -r AUTOGEN="${1:-autogen}"
 
 # Pair-wise associated test cases of files and permissions.
 declare -ar FILES=(file.sh file.py)
@@ -67,7 +67,7 @@ function runTests() {
 
     touch "${file_path}"
     chmod "${perm}" "${file_path}"
-    "${AUTOGEN}" -i "${file_path}"
+    "${SRCDIR}/${AUTOGEN}" -i "${file_path}"
 
     # Verify whether new permissions match the original file permissions.
     local new_perm="$(getFilePermissions "${file_path}")"

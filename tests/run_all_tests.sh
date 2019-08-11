@@ -22,7 +22,7 @@ source "$(dirname $0)/test_util.sh"
 
 for file in *_test.sh; do
   echo "Running tests in ${file} ..."
-  bash "${file}" \
+  bash "${file}" "autogen.sh" \
       && test_record_and_print_passed "${file}" \
       || test_record_and_print_failed "${file}"
   echo
