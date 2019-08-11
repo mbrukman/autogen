@@ -315,7 +315,7 @@ function autogenForFile() {
   case "${file}" in
 
     *.bat)
-      printLicenseNonHashComment "rem "
+      printLicenseNonHashComment "rem"
       echo
       if [ ${TOP_LEVEL_COMMENT} -eq 1 ]; then
         echo "rem ${TODO_COMMENT}"
