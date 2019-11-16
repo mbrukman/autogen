@@ -103,9 +103,13 @@ caching.
 * [addlicense](https://github.com/google/addlicense)
 * [License Up](https://github.com/nikitavoloboev/license-up)
 
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for details.
+
 ## License
 
-Apache 2.0; see [LICENSE.txt](LICENSE.txt) for details.
+Apache 2.0; see [`LICENSE.txt`](LICENSE.txt) for details.
 
 ## Disclaimer
 
