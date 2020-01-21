@@ -103,8 +103,7 @@ matrix:
       before_install:
         - brew update
         - brew tap bazelbuild/tap
-        - brew tap-pin bazelbuild/tap
-        - brew install bazel
+        - brew install bazelbuild/tap/bazel
       script:
         - bazel test //...
 
