@@ -27,7 +27,6 @@ jobs:
       env: TEST_RUNNER=make VERBOSE=1
       script:
         - make test
-        - make regen-test
 
     - os: linux
       dist: bionic
@@ -49,7 +48,6 @@ jobs:
       env: TEST_RUNNER=make VERBOSE=1
       script:
         - make test
-        - make regen-test
 
     - os: osx
       language: java

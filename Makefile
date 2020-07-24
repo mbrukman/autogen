@@ -25,7 +25,3 @@ test:
 
 regen:
 	$(VERB) bash gen_test_results.sh
-
-regen-test:
-	$(VERB) $(MAKE) regen
-	$(VERB) $(MAKE) test
