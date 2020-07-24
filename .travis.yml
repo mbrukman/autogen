@@ -55,12 +55,9 @@ jobs:
       language: java
       env: TEST_RUNNER=bazel
       # Bazel installation instructions as per
-      # https://blog.bazel.build/2018/08/22/bazel-homebrew.html to use the
-      # embedded JDK instead of relying on Xcode or installing JDK manually.
-      before_install:
-        - brew update
-        - brew tap bazelbuild/tap
-        - brew install bazelbuild/tap/bazel
+      # https://docs.bazel.build/versions/master/install-os-x.html#install-on-mac-os-x-homebrew
+      install:
+        - brew install bazel
       script:
         - bazel test //...
 
