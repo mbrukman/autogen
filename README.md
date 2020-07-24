@@ -76,27 +76,22 @@ several files to the [`tests/testdata`](tests/testdata) directory, namely:
 * `<feature>.err` - expected stderr for the test
 
 To generate the `*.out` and `*.err` files automatically, just add the `*.in`
-files and run `make regen`. Then, examine the resulting `*.out` and `*.err`
-files.
+files and run `regen_testdata.sh`. Then, examine the resulting `*.out` and
+`*.err` files.
 
 Other custom tests can be added as separate scripts in the [`tests`](tests)
-directory. If the file has the suffix `_test.sh`, it will be automatically
-picked up by [`tests/run_all_tests.sh`](tests/run_all_tests.sh) script, which
-means that `make test` will automatically run it without any other changes.
-
-Be sure to also add an entry for it in [`tests/BUILD`](tests/BUILD) file for
-Bazel to be able to run it as well, including appropriate dependencies on any
+directory. Add an entry for each `*_test.sh` script in the
+[`tests/BUILD`](tests/BUILD) file, including appropriate dependencies on any
 data files it may need.
 
 ## Testing
 
-You have two options:
+We use [Bazel](https://docs.bazel.build/versions/master/install.html) for
+testing:
 
-* via [Bazel](http://bazel.io/): `bazel test //...`
-* via Make: `make test`
-
-Bazel is typically faster, especially when rerunning tests, due to built-in
-caching.
+```
+bazel test //...`
+```
 
 ## Related work
 
