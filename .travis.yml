@@ -15,64 +15,24 @@
 ################################################################################
 
 language: generic
-sudo: false
 
 branches:
   only:
     - master
 
-matrix:
+jobs:
   include:
     - os: linux
-      dist: trusty
+      dist: bionic
       env: TEST_RUNNER=make VERBOSE=1
-      sudo: false
       script:
         - make test
         - make regen-test
 
     - os: linux
-      dist: trusty
+      dist: bionic
       env: TEST_RUNNER=bazel
-
-      # `sudo` is required because:
-      #
-      # * Bazel source repo is not whitelisted:
-      #   https://github.com/travis-ci/apt-source-whitelist/issues/305
-      #
-      # * Bazel package is not whitelisted (requires whitelisting the source
-      #   repo first)
-      #
-      # Once all of these are resolved, we can switch this to `false` and
-      # utilize the more efficient container-based infrastructure.
-      sudo: required
-
-      # This is a necessary setting; without it, `oracle-java8-installer` does
-      # not install: https://travis-ci.org/mbrukman/autogen/jobs/178708337
       language: java
-
-      # Using JDK switcher setting in addition to the `oracle-java8-installer`
-      # package below as follows:
-      #
-      #     jdk:
-      #       - oraclejdk8
-      #
-      # fails with:
-      #
-      #     $ jdk_switcher use ["oraclejdk8"]
-      #     Sorry, but JDK '[oraclejdk8]' is not known.
-      #     The command "jdk_switcher use ["oraclejdk8"]" failed and exited with 1 during .
-      #
-      # even though `oracle-java8-installer` installed successfully moments
-      # prior: https://travis-ci.org/mbrukman/autogen/jobs/178714227
-      #
-      # Using the same setting:
-      #
-      #     jdk:
-      #       - oraclejdk8
-      #
-      # without installing the `oracle-java8-installer` package produces the
-      # same error: https://travis-ci.org/mbrukman/autogen/jobs/178710299
 
       addons:
         apt:
@@ -80,7 +40,6 @@ matrix:
             - sourceline: "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8"
               key_url: "https://storage.googleapis.com/bazel-apt/doc/apt-key.pub.gpg"
           packages:
-            - oracle-java8-installer
             - bazel
 
       script:
@@ -88,7 +47,6 @@ matrix:
 
     - os: osx
       env: TEST_RUNNER=make VERBOSE=1
-      sudo: false
       script:
         - make test
         - make regen-test
@@ -96,7 +54,6 @@ matrix:
     - os: osx
       language: java
       env: TEST_RUNNER=bazel
-      sudo: false
       # Bazel installation instructions as per
       # https://blog.bazel.build/2018/08/22/bazel-homebrew.html to use the
       # embedded JDK instead of relying on Xcode or installing JDK manually.
