@@ -42,7 +42,7 @@ jobs:
             - bazel
 
       script:
-        - bazel test //...
+        - bazel test --config=ci //...
 
     - os: osx
       env: TEST_RUNNER=make VERBOSE=1
@@ -64,7 +64,7 @@ jobs:
       install:
         - HOMEBREW_NO_AUTO_UPDATE=1 brew install bazel
       script:
-        - bazel test //...
+        - bazel test --config=ci //...
 
   allow_failures:
     - os: osx
