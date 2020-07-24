@@ -13,27 +13,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-################################################################################
-#
-# (Re-)generates the expected stdout and stderr outputs for tests.
-#
-################################################################################
 
-function gen_test_data() {
-  local files="$@"
-  if [[ -z "${files}" ]]; then
-    files=tests/testdata/*.in
-  fi
+# Regenerates the expected stdout and stderr outputs for tests.
+# Args:
+#   $*: files to be updated
+files="$@"
+if [[ -z "${files}" ]]; then
+  files=tests/testdata/*.in
+fi
 
-  for input in ${files}; do
-    local expected_out="${input%.in}.out"
-    local expected_err="${input%.in}.err"
+for input in ${files}; do
+  expected_out="${input%.in}.out"
+  expected_err="${input%.in}.err"
 
-    # Run tests in a hermetic environment such that they don't break every year.
-    env YEAR=2014 \
-      bash -c "./autogen $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
-  done
-}
-
-gen_test_data "$@"
+  # Run tests in a hermetic environment such that they don't break every year.
+  env YEAR=2014 \
+    bash -c "./autogen $(cat "${input}")" > "${expected_out}" 2> "${expected_err}"
+done
