@@ -24,13 +24,6 @@ jobs:
   include:
     - os: linux
       dist: bionic
-      env: TEST_RUNNER=make VERBOSE=1
-      script:
-        - make test
-
-    - os: linux
-      dist: bionic
-      env: TEST_RUNNER=bazel
       language: java
 
       addons:
@@ -45,14 +38,11 @@ jobs:
         - bazel test --config=ci //...
 
     - os: osx
-      env: TEST_RUNNER=make VERBOSE=1
-      script:
-        - make test
-
-    - os: osx
+      # Per https://docs.travis-ci.com/user/reference/osx/#macos-version, this
+      # is the latest version of macOS that includes Java 8, which is required
+      # by Bazel when installed via Homebrew.
       osx_image: xcode9.3
       language: java
-      env: TEST_RUNNER=bazel
       before_cache:
         - brew cleanup
       cache:
@@ -65,8 +55,3 @@ jobs:
         - HOMEBREW_NO_AUTO_UPDATE=1 brew install bazel
       script:
         - bazel test --config=ci //...
-
-  allow_failures:
-    - os: osx
-
-  fast_finish: true
