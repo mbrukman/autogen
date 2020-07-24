@@ -50,6 +50,7 @@ jobs:
         - make test
 
     - os: osx
+      osx_image: xcode9.3
       language: java
       env: TEST_RUNNER=bazel
       before_cache:
@@ -59,8 +60,9 @@ jobs:
           - $HOME/Library/Caches/Homebrew
       # Bazel installation instructions as per
       # https://docs.bazel.build/versions/master/install-os-x.html#install-on-mac-os-x-homebrew
+      # The env var prevents automatic `brew update` before `brew install`.
       install:
-        - brew install bazel
+        - HOMEBREW_NO_AUTO_UPDATE=1 brew install bazel
       script:
         - bazel test //...
 
