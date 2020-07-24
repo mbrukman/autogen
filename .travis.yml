@@ -52,6 +52,11 @@ jobs:
     - os: osx
       language: java
       env: TEST_RUNNER=bazel
+      before_cache:
+        - brew cleanup
+      cache:
+        directories:
+          - $HOME/Library/Caches/Homebrew
       # Bazel installation instructions as per
       # https://docs.bazel.build/versions/master/install-os-x.html#install-on-mac-os-x-homebrew
       install:
