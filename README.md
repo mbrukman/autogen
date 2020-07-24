@@ -90,7 +90,7 @@ We use [Bazel](https://docs.bazel.build/versions/master/install.html) for
 testing:
 
 ```
-bazel test //...`
+bazel test //...
 ```
 
 ## Related work
