@@ -1,6 +1,9 @@
 # autogen
 
-[![Build Status](https://travis-ci.org/mbrukman/autogen.svg?branch=master)](https://travis-ci.org/mbrukman/autogen)
+[![Build Status][github-ci-badge]][github-ci-url]
+
+[github-ci-badge]: https://github.com/mbrukman/autogen/actions/workflows/main.yml/badge.svg
+[github-ci-url]: https://github.com/mbrukman/autogen/actions/workflows/main.yml
 
 Automatically generate boilerplate comments and code for new files with a single
 command.
