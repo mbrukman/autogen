@@ -17,4 +17,5 @@
 # useful Bazel output, when running on Travis CI.
 #
 # Note: `--batch` is only applicable for `bazel build`, not `bazel test`.
+build:ci --noshow_progress --noshow_loading_progress --verbose_failures
 test:ci --noshow_progress --noshow_loading_progress --test_output=errors --verbose_failures
