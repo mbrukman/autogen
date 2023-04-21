@@ -341,6 +341,11 @@ function autogenForFile() {
       printFileCommentTemplate "//"
       ;;
 
+    *CMakeLists.txt | *.cmake)
+      printLicenseHashComment
+      printFileCommentTemplate "#"
+      ;;
+
     *.el | .emacs | *.lisp)
       printLicenseNonHashComment ";;"
       printFileCommentTemplate ";;"
