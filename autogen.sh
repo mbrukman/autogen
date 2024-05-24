@@ -489,7 +489,7 @@ EOF
       ;;
 
     *.ipynb)
-      printLicenseHashComment | $(dirname $0)/ipynb.py
+      printLicenseHashComment | python $(dirname $0)/ipynb.py
       ;;
 
     *.rb)
