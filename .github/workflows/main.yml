@@ -24,22 +24,30 @@ jobs:
   build:
     strategy:
       matrix:
+        bazel: [ '6.0.0' ]
         os: [ 'ubuntu-22.04', 'macos-12' ]
 
-    name: Running on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    name: Running on ${{ matrix.os }}
+    env:
+      USE_BAZEL_VERSION: ${{ matrix.bazel }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Bazelisk
-        uses: bazelbuild/setup-bazelisk@v3
-
-      - name: Setup cache for Bazel
-        uses: actions/cache@v4
+      - name: Setup Bazel
+        uses: bazel-contrib/setup-bazel@0.8.4
         with:
-          path: "~/.cache/bazel"
-          key: bazel
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+          # Share repository cache between workflows.
+          repository-cache: true
+
+      - name: Verify Bazel installation
+        run: bazel version
 
       - name: Build
         run: bazel build --config=ci //...
