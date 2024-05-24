@@ -16,15 +16,15 @@ name: "Build & test"
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
     strategy:
       matrix:
-        os: [ 'ubuntu-20.04', 'macos-10.15' ]
+        os: [ 'ubuntu-22.04', 'macos-12' ]
 
     name: Running on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -45,4 +45,4 @@ jobs:
         run: bazel build --config=ci //...
 
       - name: Run tests
-        run: bazel test --config=ci //...
+        run: bazel test --config=ci --test_env=VERBOSE=2 //...
