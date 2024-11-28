@@ -23,7 +23,7 @@
 #   autogen.sh file.js
 #   autogen.sh file.py
 
-# If we're runnig via Bazel, find the source files via $TEST_SRCDIR;
+# If we're running via Bazel, find the source files via $TEST_SRCDIR;
 # otherwise, default to dir of current file and search relative to that.
 if [ -n "${TEST_SRCDIR:-}" ]; then
   declare -r SRCDIR="${TEST_SRCDIR}/${TEST_WORKSPACE}"
@@ -356,7 +356,7 @@ function autogenForFile() {
       printFileCommentTemplate "%"
       ;;
 
-    *.hs)
+    *.hs | *.lua)
       printLicenseNonHashComment "--"
       printFileCommentTemplate "--"
       ;;
