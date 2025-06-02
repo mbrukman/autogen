@@ -180,6 +180,7 @@ Licenses:
   lgpl2.1:      LGPL 2.1 (aliases: lgpl, lgpl2)
   mit:          MIT
   mpl2.0:       MPL 2.0 (aliases: mpl, mpl2)
+  none:         no license, just copyright with all rights reserved
 EOF
 }
 
@@ -295,6 +296,9 @@ case "${LICENSE_NAME}" in
     ;;
   mpl | mpl2 | mpl-2 | mpl2.0 | mpl-2.0)
     LICENSE_FILE="${SRCDIR}/licenses/mpl-2.0.txt"
+    ;;
+  none)
+    LICENSE_FILE="${SRCDIR}/licenses/none.txt"
     ;;
   *)
     echo "Invalid license selected: ${LICENSE_NAME}" >&2
