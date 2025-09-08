@@ -16,9 +16,26 @@ name: "Build & test"
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+
+  # Enable manually triggering this workflow
+  workflow_dispatch:
+
+  schedule:
+      # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule
+      #
+      #      ┌───────────── minute (0 - 59)
+      #      │ ┌───────────── hour (0 - 23)
+      #      │ │ ┌───────────── day of the month (1 - 31)
+      #      │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+      #      │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+      #      │ │ │ │ │
+    - cron: '1 2 3 * *'  # run at 2:01 every month on the 3rd day
 
 jobs:
   build:
