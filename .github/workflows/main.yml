@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         bazel: [ '6.0.0' ]
-        os: [ 'ubuntu-24.04', 'macos-13' ]
+        os: [ 'ubuntu-24.04', 'macos-14' ]
 
     runs-on: ${{ matrix.os }}
     name: Running on ${{ matrix.os }}
